@@ -22,7 +22,7 @@
     @IBOutlet weak var headlineImageView: UIImageView!
     
     
-    @IBOutlet weak var lblFullName: UILabel!
+    
     @IBOutlet weak var notesTextView: KMPlaceholderTextView!
     
  
