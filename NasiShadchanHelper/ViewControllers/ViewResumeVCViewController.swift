@@ -49,6 +49,10 @@ class ViewResumeVCViewController: UIViewController {
     }
     
     
+   
+    
+    
+    
     func setUpPDFView() {
               
               var document: PDFDocument!

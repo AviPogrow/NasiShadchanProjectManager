@@ -1616,13 +1616,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AK4-dG-cRb" userLabel="PDFView" customClass="PDFView">
-                                <rect key="frame" x="0.0" y="81" width="414" height="727"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="728"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1q-Rn-iJI">
-                                <rect key="frame" x="279" y="20" width="115" height="53"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                <state key="normal" title="Dismiss"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1q-Rn-iJI">
+                                <rect key="frame" x="342.5" y="20" width="51.5" height="52"/>
+                                <state key="normal" image="darkOnLight"/>
                                 <connections>
                                     <action selector="dismissViewResumeTapped:" destination="KfI-sv-bnQ" eventType="touchUpInside" id="60d-8Q-zoE"/>
                                 </connections>
@@ -1973,10 +1972,10 @@
             </objects>
             <point key="canvasLocation" x="-426.08695652173918" y="-1426.3392857142856"/>
         </scene>
-        <!--Send Resume -->
+        <!--ResumeViewController-->
         <scene sceneID="KOg-9W-UVJ">
             <objects>
-                <tableViewController storyboardIdentifier="ResumeViewController" title="Send Resume " useStoryboardIdentifierAsRestorationIdentifier="YES" id="t92-ba-g2T" customClass="ResumeViewController" customModule="NasiShadchanHelper" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ResumeViewController" title="Send Resume " useStoryboardIdentifierAsRestorationIdentifier="YES" id="t92-ba-g2T" userLabel="ResumeViewController" customClass="ResumeViewController" customModule="NasiShadchanHelper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="225" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="PTr-cd-Z52">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="3000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2090,13 +2089,7 @@
                             <outlet property="delegate" destination="t92-ba-g2T" id="hEe-3F-7sI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Send Resume" largeTitleDisplayMode="always" id="Ecc-Qh-1Ly">
-                        <barButtonItem key="rightBarButtonItem" id="tGw-Ve-rpc">
-                            <connections>
-                                <action selector="saveTapped:" destination="t92-ba-g2T" id="aTY-PL-ZyF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Send Resume" largeTitleDisplayMode="always" id="Ecc-Qh-1Ly"/>
                     <size key="freeformSize" width="414" height="3000"/>
                     <connections>
                         <outlet property="btnShareResumeAndPhoto" destination="8LD-aq-2Hk" id="Fxz-Xg-48t"/>
@@ -2117,6 +2110,7 @@
     <resources>
         <image name="AdinaDavis" width="252" height="335"/>
         <image name="btnGoogle" width="32" height="32"/>
+        <image name="darkOnLight" width="51.666667938232422" height="51.666667938232422"/>
         <image name="imgAuthBg" width="398.33334350585938" height="209.66667175292969"/>
         <image name="imgLogout" width="23.333333969116211" height="23.333333969116211"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>

@@ -49,9 +49,10 @@ class ResumeViewController: UITableViewController {
     
     var childAutoIDKeyInResearchList : String!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         checkSentList()
         downloadDocument()
@@ -66,9 +67,12 @@ class ResumeViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-       
     }
+    
+    
+  
+    
+  
     
     
     func checkSentList() {
@@ -178,6 +182,19 @@ class ResumeViewController: UITableViewController {
             "\(selectedNasiGirl.lastNameOfGirl)"
         
         let activityVC =  UIActivityViewController(activityItems: [documentAsImage!,imageToShare!,textMessageString], applicationActivities: [])
+            
+            
+            
+                 
+        if UIDevice.current.userInterfaceIdiom == .pad {
+                                               
+        activityVC.modalPresentationStyle = .popover
+                                              
+           // activityVC.popoverPresentationController?.barButtonItem = rightBarButton
+        activityVC.popoverPresentationController?.sourceView = btnShareResumeAndPhoto
+                                              
+                         }
+            
            
            activityVC.excludedActivityTypes = [
                UIActivity.ActivityType.postToWeibo,
@@ -221,6 +238,9 @@ class ResumeViewController: UITableViewController {
     func shareResumeOnly() {
         
         
+        
+        
+        
         if localURL != nil && localImageURL != nil {
             
         btnShareResumeOnly.isEnabled = true
@@ -234,6 +254,23 @@ class ResumeViewController: UITableViewController {
             
        
         let activityVC = UIActivityViewController(activityItems: [textMessageString, documentAsImage!], applicationActivities: [])
+            
+            
+        if UIDevice.current.userInterfaceIdiom == .pad {
+                                        
+                  activityVC.modalPresentationStyle = .popover
+                                       
+                  //activityVC.popoverPresentationController?.barButtonItem = rightBarButton
+                       activityVC.popoverPresentationController?.sourceView = btnShareResumeOnly
+                                       
+                  }
+            
+            
+        // if UIDevice.current.userInterfaceIdiom == .pad {
+                //     activityVC.popoverPresentationController?//.barButtonItem = barButtonItem
+            //     }
+
+                
         
         activityVC.excludedActivityTypes = [
             UIActivity.ActivityType.postToWeibo,
@@ -261,9 +298,6 @@ class ResumeViewController: UITableViewController {
                     
                 self.checkStatusBeforeSavingToSent()
                 
-                
-                
-                
                 } else {
                 print("user cancelled the activityController")
                 }
@@ -275,6 +309,33 @@ class ResumeViewController: UITableViewController {
         present(activityVC, animated: true, completion: nil)
         }
     }
+    
+    
+    /*
+    func shareInPopover()
+           {
+               NSString *forwardedString = [[NSString alloc] initWithFormat:@"Check out this leaflet\n\n %@ \n\nself.theURLToShare];
+                   
+               UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:[NSArray arrayWithObjects:forwardedString, nil] applicationActivities:nil];
+
+               if (IDIOM == IPAD)
+               {
+                   NSLog(@"iPad");
+                   activityViewController.popoverPresentationController.sourceView = self.view;
+           //        activityViewController.popoverPresentationController.sourceRect = self.frame;
+
+                  _popover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+                  _popover.delegate = self;
+                  [_popover presentPopoverFromBarButtonItem:_shareBarButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+               }
+               else
+               {
+                   NSLog(@"iPhone");
+                   [self presentViewController:activityViewController
+                                     animated:YES
+                                   completion:nil];
+               }
+ */
     
     func drawPDFfromURL(url: URL) -> UIImage? {
            guard let document = CGPDFDocument(url as CFURL) else { return nil }
