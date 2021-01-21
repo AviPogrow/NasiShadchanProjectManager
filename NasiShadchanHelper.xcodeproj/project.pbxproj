@@ -30,6 +30,9 @@
 		18AB903C252DBACA00D9FCAB /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB903B252DBACA00D9FCAB /* HomeTabBarController.swift */; };
 		18AB903E252DC21100D9FCAB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB903D252DC21100D9FCAB /* UserInfo.swift */; };
 		18E5DD152525CBCE005DD1DE /* NasiGirlsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */; };
+		3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */; };
+		3D6C74F325B773E80008C5A3 /* NasiBoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F225B773E80008C5A3 /* NasiBoy.swift */; };
+		3D6C74F525B77A300008C5A3 /* AddEditBoyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */; };
 		3D9DA71C25A7827F0056F656 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DA71B25A7827F0056F656 /* MyTabBarController.swift */; };
 		3D9DA71E25ACCEB10056F656 /* ViewResumeVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DA71D25ACCEB10056F656 /* ViewResumeVCViewController.swift */; };
 		3D9DA72025AE0DEA0056F656 /* AllNasiGirlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DA71F25AE0DEA0056F656 /* AllNasiGirlsViewController.swift */; };
@@ -107,6 +110,9 @@
 		18AB903B252DBACA00D9FCAB /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		18AB903D252DC21100D9FCAB /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiGirlsList.swift; sourceTree = "<group>"; };
+		3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBoysViewController.swift; sourceTree = "<group>"; };
+		3D6C74F225B773E80008C5A3 /* NasiBoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiBoy.swift; sourceTree = "<group>"; };
+		3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditBoyViewController.swift; sourceTree = "<group>"; };
 		3D9DA71B25A7827F0056F656 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 		3D9DA71D25ACCEB10056F656 /* ViewResumeVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewResumeVCViewController.swift; sourceTree = "<group>"; };
 		3D9DA71F25AE0DEA0056F656 /* AllNasiGirlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNasiGirlsViewController.swift; sourceTree = "<group>"; };
@@ -352,6 +358,7 @@
 				3DC1849E258C13AD00B529F0 /* NasiGirl.swift */,
 				18AB903D252DC21100D9FCAB /* UserInfo.swift */,
 				18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */,
+				3D6C74F225B773E80008C5A3 /* NasiBoy.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -452,6 +459,8 @@
 				CEF80D1D245F7014009FE684 /* HudView.swift */,
 				3D9DA71D25ACCEB10056F656 /* ViewResumeVCViewController.swift */,
 				3D9DA71F25AE0DEA0056F656 /* AllNasiGirlsViewController.swift */,
+				3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */,
+				3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -661,6 +670,7 @@
 				184F2F52252AE02500252C97 /* Utility.swift in Sources */,
 				3DC184A125936A7700B529F0 /* SentTableViewCell.swift in Sources */,
 				18E5DD152525CBCE005DD1DE /* NasiGirlsList.swift in Sources */,
+				3D6C74F325B773E80008C5A3 /* NasiBoy.swift in Sources */,
 				3DC18495258809A100B529F0 /* ResearchViewController.swift in Sources */,
 				3DC1849D258BBE6A00B529F0 /* GirlSentCell.swift in Sources */,
 				CEC468DB245A217F0071EC85 /* ResumeViewController.swift in Sources */,
@@ -671,6 +681,7 @@
 				CE3AC07424536729006B9FEA /* AppDelegate.swift in Sources */,
 				1865CB3F2542AC5900B1272A /* GirlsDetailTableCell.swift in Sources */,
 				1825F9AA252C5F9500448269 /* LoginParentVC.swift in Sources */,
+				3D6C74F525B77A300008C5A3 /* AddEditBoyViewController.swift in Sources */,
 				184B49872563E77C008B61F9 /* GetStartedVC.swift in Sources */,
 				184F9859252C622B00187D72 /* AlignedPlaceholderTextField.swift in Sources */,
 				184F2F55252AE16200252C97 /* Categories.swift in Sources */,
@@ -684,6 +695,7 @@
 				CEC468E0245C60120071EC85 /* YeshivaAndCollegeWorkingViewController.swift in Sources */,
 				1825F9A0252C400600448269 /* SignUpVC.swift in Sources */,
 				1851798A2525FAF20099D65E /* ProgressIndicator.swift in Sources */,
+				3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */,
 				CE3AC0AC2454650F006B9FEA /* SingleTableViewCell.swift in Sources */,
 				CE525A702461B55300CBEC41 /* UIImage+Resize.swift in Sources */,
 				CE3AC0A6245383A0006B9FEA /* FullTimeYeshivaViewController.swift in Sources */,
@@ -874,7 +886,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = P77A2352BM;
 				INFOPLIST_FILE = NasiShadchanHelper/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -882,7 +894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 9.0;
+				MARKETING_VERSION = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AviPogrow.NasiShadchanHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -896,7 +908,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = P77A2352BM;
 				INFOPLIST_FILE = NasiShadchanHelper/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -904,7 +916,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 9.0;
+				MARKETING_VERSION = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AviPogrow.NasiShadchanHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -38,6 +38,7 @@
     @IBOutlet weak var lblMiddleName: UILabel!
     @IBOutlet weak var lblLastName: UILabel!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblFullName: UILabel!
     
     //Section 3
     @IBOutlet weak var lblDob: UILabel!
@@ -346,7 +347,7 @@
         headlineImageView.loadImageFromUrl(strUrl: selectedNasiGirl.imageDownloadURLString, imgPlaceHolder: "")
        //headlineImageView.loadImageUsingCacheWithUrlString(selectedNasiGirl.imageDownloadURLString)
         
-        lblFullName?.text =  "\(selectedSingle?.firstNameOfGirl ?? "")" + " "  + "\(selectedSingle?.lastNameOfGirl ?? "")" //top 1 name
+        lblFullName?.text =  "\(selectedSingle?.nameSheIsCalledOrKnownBy ?? "")" + " "  + "\(selectedSingle?.lastNameOfGirl ?? "")" //top 1 name
         
         
         notesTextView.layer.borderColor = UIColor.lightGray.cgColor
