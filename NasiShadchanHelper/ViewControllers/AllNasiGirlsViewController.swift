@@ -57,7 +57,7 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
         cell.backgroundColor = UIColor.white
         
         cell.nameTextLabel.backgroundColor = UIColor.systemGroupedBackground
-        cell.nameTextLabel!.text = "\(currentGirl.firstNameOfGirl)" + " " + "\(currentGirl.lastNameOfGirl)"
+        cell.nameTextLabel!.text = "\(currentGirl.nameSheIsCalledOrKnownBy)" + " " + "\(currentGirl.lastNameOfGirl)"
         
         cell.profileImageView.loadImageFromUrl(strUrl: currentGirl.imageDownloadURLString, imgPlaceHolder: "")
     
