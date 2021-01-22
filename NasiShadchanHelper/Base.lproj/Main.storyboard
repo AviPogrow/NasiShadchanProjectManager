@@ -19,13 +19,13 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BoysTableViewCell" rowHeight="117" id="RIW-u0-gag">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="BoysTableViewCell" rowHeight="117" id="RIW-u0-gag">
                                         <rect key="frame" x="0.0" y="28" width="414" height="117"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RIW-u0-gag" id="LGF-fE-1Oj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="117"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="117"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" red="0.65262308000000002" green="0.75824095520000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="AoU-jd-sjZ" kind="show" identifier="ShowBoyDetails" id="soT-7U-aPX"/>
@@ -43,7 +43,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xlh-dv-WGd"/>
                     </view>
-                    <navigationItem key="navigationItem" id="0pM-Hd-hkj"/>
+                    <navigationItem key="navigationItem" id="0pM-Hd-hkj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="PIn-md-6cd">
+                            <connections>
+                                <segue destination="AoU-jd-sjZ" kind="show" identifier="AddNasiBoy" id="Zf1-kR-nuO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="8hf-8i-G8d" id="2iY-4g-l5v"/>
                     </connections>
@@ -55,7 +61,7 @@
         <!--AddEditBoyViewController-->
         <scene sceneID="14u-x1-h0D">
             <objects>
-                <tableViewController id="AoU-jd-sjZ" userLabel="AddEditBoyViewController" customClass="AddEditBoyViewController" customModule="NasiShadchanHelper" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddEditBoyViewController" id="AoU-jd-sjZ" userLabel="AddEditBoyViewController" customClass="AddEditBoyViewController" customModule="NasiShadchanHelper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aWn-Us-deB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -208,7 +214,13 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="SIW-BZ-5md"/>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="5Lj-nu-gNR"/>
+                    <navigationItem key="navigationItem" title="Boy Details" largeTitleDisplayMode="always" id="5Lj-nu-gNR">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Eb3-Ep-sJp">
+                            <connections>
+                                <action selector="saveTapped:" destination="AoU-jd-sjZ" id="dD2-1W-ICH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="boysFirstNameTextField" destination="tWd-sB-1T3" id="IWN-F2-Awx"/>
                         <outlet property="boysLastNameTextField" destination="rgy-36-vg7" id="bLk-We-jTJ"/>
@@ -2342,6 +2354,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="RpK-Er-MFj"/>
+        <segue reference="soT-7U-aPX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AdinaDavis" width="252" height="335"/>

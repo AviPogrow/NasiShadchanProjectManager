@@ -7,13 +7,13 @@
 //
 
 import UIKit
-//import Firebase
+import Firebase
 
 class AddEditBoyViewController: UITableViewController {
 
-//let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
+let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
    
-    var nasiBoyToEdit: NasiBoy?
+   
     var selectedNasiBoy: NasiBoy!
     
     @IBOutlet weak var boysLastNameTextField: UITextField!
@@ -30,6 +30,7 @@ class AddEditBoyViewController: UITableViewController {
         super.viewDidLoad()
         
         if selectedNasiBoy != nil {
+            
             boysLastNameTextField.text = selectedNasiBoy.boyLastName
             boysFirstNameTextField.text = selectedNasiBoy.boyFirstName
             
@@ -38,8 +39,64 @@ class AddEditBoyViewController: UITableViewController {
             
             contactsCellTextField.text = selectedNasiBoy.decisionMakerCell
             contactsEmailTextField.text = selectedNasiBoy.decisionMakerEmail
+            
+           
+            
+        } else {
+            
         }
 
-        
     }
+    
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        
+         // if selectedNasiBoy isn't nil then we are
+         // editing
+         if let selectedNasiBoy = selectedNasiBoy {
+            
+            selectedNasiBoy.boyLastName =  boysLastNameTextField.text!
+            selectedNasiBoy.boyFirstName = boysFirstNameTextField.text!
+            selectedNasiBoy.decisionMakerLastName = contactsLastNameTextField.text!
+            
+            selectedNasiBoy.decisionMakerFirstName = contactsFirstNameTextField.text!
+            selectedNasiBoy.decisionMakerCell = contactsCellTextField.text!
+            selectedNasiBoy.decisionMakerEmail = contactsEmailTextField.text!
+            
+            let dictionaryForFB = selectedNasiBoy.toAnyObject()
+            
+    guard let myId = UserInfo.curentUser?.id else {return}
+          
+            let ref = selectedNasiBoy.ref
+            let key = selectedNasiBoy.key
+            
+            // get the current reference to current boy
+            let usersCurrentBoyRef = allNasiBoysRef.child(myId).child(key)
+            
+            
+            usersCurrentBoyRef.updateChildValues(dictionaryForFB as! [AnyHashable : Any])
+            
+            
+            
+         } else {
+            addNasiBoyToShadchansBoyList()
+        }
+    }
+    
+    func addNasiBoyToShadchansBoyList() {
+        
+        let newNasiBoy =
+                NasiBoy(decisionMakerLastName: contactsLastNameTextField.text ?? "N/A", decisionMakerFirstName: contactsFirstNameTextField.text ?? "N/A", decisionMakerCell: contactsCellTextField.text ?? "N/A", decisionMakerEmail: contactsEmailTextField.text ?? "N/A", boyLastName: boysLastNameTextField.text ?? "N/A", boyFirstName: boysFirstNameTextField.text ?? "N/A")
+        
+        guard let myId = UserInfo.curentUser?.id else {
+                 return
+        }
+        
+        let dict = newNasiBoy.toAnyObject()
+               
+        allNasiBoysRef.child(myId).childByAutoId().setValue(dict)
+        
+        }
+    
+    
 }

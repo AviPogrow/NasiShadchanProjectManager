@@ -941,7 +941,7 @@ func show(image: UIImage) {
         let vcMailCompose = MFMailComposeViewController()
         vcMailCompose.mailComposeDelegate = self
         vcMailCompose.setToRecipients([emailRecipients])
-        let subject =  "\("Resume")" + " "  + "\(selectedNasiGirl.firstNameOfGirl )" + " "  + "\(selectedNasiGirl.lastNameOfGirl )" //top 1 name
+        let subject =  "\("Resume")" + " "  + "\(selectedNasiGirl.nameSheIsCalledOrKnownBy )" + " "  + "\(selectedNasiGirl.lastNameOfGirl )" //top 1 name
         vcMailCompose.setSubject(subject)
         let strMailBody = "Please type your question here:\n\n\n"
         vcMailCompose.setMessageBody(strMailBody, isHTML: false)
