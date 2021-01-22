@@ -81,6 +81,8 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
          } else {
             addNasiBoyToShadchansBoyList()
         }
+        
+        navigationController?.popViewController(animated: true)
     }
     
     func addNasiBoyToShadchansBoyList() {
