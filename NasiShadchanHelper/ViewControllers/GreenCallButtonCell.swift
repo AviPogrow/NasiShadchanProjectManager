@@ -19,8 +19,8 @@ class GreenCallButtonCell: UICollectionViewCell {
         let imageCam = UIImage(named: "imgBack")
         let imageView = UIImageView(image: imageCam)
         
-        
-        backgroundColor = #colorLiteral(red: 0.297358036, green: 0.8514089584, blue: 0.389008224, alpha: 1)
+        backgroundColor = UIColor.systemGroupedBackground
+        //backgroundColor = #colorLiteral(red: 0.297358036, green: 0.8514089584, blue: 0.389008224, alpha: 1)
         
         imageView.contentMode = .scaleAspectFit
         addSubview(imageView)

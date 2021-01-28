@@ -18,7 +18,9 @@ class NasiBoy: NSObject {
     var  decisionMakerFirstName: String = ""
     var  decisionMakerCell: String = ""
     var  decisionMakerEmail: String = ""
+    var  addedByShadchanUserID: String = ""
     
+     // init swift object from firebase api call
      init(snapshot: DataSnapshot) {
         
         // FB snapshot has a ref and key property
@@ -37,6 +39,9 @@ class NasiBoy: NSObject {
         let boyLastName = value["boyLastName"] ?? "N/A"
         let boyFirstName = value["boyFirstName"] ?? "N/A"
         
+        let addedByShadchanUserID = value["addedByShadchanUserID"] ?? "N/A"
+        
+        self.addedByShadchanUserID = addedByShadchanUserID
         self.decisionMakerLastName = decisionMakerLastName
         self.decisionMakerFirstName = decisionMakerFirstName
         
@@ -48,10 +53,14 @@ class NasiBoy: NSObject {
     
     }
     
-    init(decisionMakerLastName: String, decisionMakerFirstName: String, decisionMakerCell: String, decisionMakerEmail:String, boyLastName:String, boyFirstName: String, key: String = "") {
+    // init swift object from user input to then convert into dict
+    // for upload
+    init(addedByShadchanUserID:String, decisionMakerLastName: String, decisionMakerFirstName: String, decisionMakerCell: String, decisionMakerEmail:String, boyLastName:String, boyFirstName: String, key: String = "") {
         
       self.ref = nil
       self.key = key
+        
+      self.addedByShadchanUserID = addedByShadchanUserID
       self.decisionMakerLastName = decisionMakerLastName
       self.decisionMakerFirstName = decisionMakerFirstName
       self.decisionMakerCell = decisionMakerCell
@@ -62,8 +71,10 @@ class NasiBoy: NSObject {
     }
     
     
+    // convert swift object to dictionary to upload to firebase
     func toAnyObject() -> Any {
        return [
+        "addedByShadchanUserID": addedByShadchanUserID,
          "decisionMakerLastName": decisionMakerLastName,
          "decisionMakerFirstName": decisionMakerFirstName,
          "decisionMakerCell": decisionMakerCell,

@@ -19,8 +19,8 @@ class KeyCell: UICollectionViewCell {
         override var isHighlighted: Bool {
             didSet {
                 backgroundColor = isHighlighted ? .darkGray : defaultBGColor
-                digitsLabel.textColor = isHighlighted ? .white : .black
-                lettersLabel.textColor = isHighlighted ? .white : .black
+                digitsLabel.textColor = isHighlighted ? .white : .link
+                lettersLabel.textColor = isHighlighted ? .white : .link
             }
         }
         
@@ -39,7 +39,8 @@ class KeyCell: UICollectionViewCell {
             lettersLabel.font = UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? .boldSystemFont(ofSize: 8) : .boldSystemFont(ofSize: 10)
             lettersLabel.textAlignment = .center
             
-            let stackView = UIStackView(arrangedSubviews: [digitsLabel, lettersLabel])
+            //let stackView = UIStackView(arrangedSubviews: [digitsLabel, lettersLabel])
+             let stackView = UIStackView(arrangedSubviews: [digitsLabel])
             stackView.axis = .vertical
             
             addSubview(stackView)

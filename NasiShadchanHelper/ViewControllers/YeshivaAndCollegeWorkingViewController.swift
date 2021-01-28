@@ -31,10 +31,12 @@ class YeshivaAndCollegeWorkingViewController: UIViewController, UITableViewDeleg
     let str3 = "Needsprofessionaltrack"
     var searchActive:Bool = false
     
+    var selectedNasiBoy: NasiBoy!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-      
+      setupNavBarWithUser()
         
         //let point = CGPoint(x: 0, y:(self.navigationController?.navigationBar.frame.size.height)!)
         //self.tableView.setContentOffset(point, animated: true)
@@ -75,6 +77,62 @@ class YeshivaAndCollegeWorkingViewController: UIViewController, UITableViewDeleg
         segmentControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         segmentControl.setTitleTextAttributes(selectedTextAttributes, for: .highlighted)
     }
+    
+    func setupNavBarWithUser() {
+     //func setupNavBarWithUser(_ user: User) {
+            //messages.removeAll()
+            //messagesDictionary.removeAll()
+            //tableView.reloadData()
+            
+            //observeUserMessages()
+            
+            let titleView = UIView()
+            titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+            titleView.backgroundColor = UIColor.red
+            
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            titleView.addSubview(containerView)
+            
+            let profileImageView = UIImageView()
+            profileImageView.translatesAutoresizingMaskIntoConstraints = false
+            profileImageView.contentMode = .scaleAspectFill
+            profileImageView.layer.cornerRadius = 20
+            profileImageView.clipsToBounds = true
+            profileImageView.backgroundColor = UIColor.gray
+            profileImageView.image = UIImage(named: "face04")
+            //if let profileImageUrl = user.profileImageUrl {
+           //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+           // }
+            
+            containerView.addSubview(profileImageView)
+            
+            //ios 9 constraint anchors
+            //need x,y,width,height anchors
+            profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+            profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            let nameLabel = UILabel()
+            nameLabel.backgroundColor = UIColor.white
+            
+            containerView.addSubview(nameLabel)
+            nameLabel.text =  "Moshe Pogrow"   //user.name
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            //need x,y,width,height anchors
+            nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+            nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+            nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+            
+            containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+            containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+            
+            self.navigationItem.titleView = titleView
+            
+    //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+        }
     
     
     

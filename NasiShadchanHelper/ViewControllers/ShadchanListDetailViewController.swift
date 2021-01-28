@@ -83,6 +83,7 @@
     // New model object sent from
     // Research list VC
     var selectedNasiGirl: NasiGirl!
+    var selectedNasiBoy: NasiBoy!
    
     var isAlreadyInResearchList: Bool = false
     var isAlreadyInSentList: Bool = false
@@ -98,7 +99,10 @@
     // ----------------------------------
  
     @IBOutlet weak var profileProjectStatusLabel: UILabel!
-    @IBOutlet weak var saveToResearchButton: UIButton!
+    
+    @IBOutlet weak var saveToShidduchIdeasAndSendButton: UIButton!
+    
+    @IBOutlet weak var saveToShidduchIdeasButton: UIButton!
     
     
     @IBOutlet weak var zoomScrollView: UIScrollView!
@@ -108,6 +112,9 @@
      //
      override func viewDidLoad() {
          super.viewDidLoad()
+        
+        
+       setupNavBarWithUser()
         
         zoomScrollView.minimumZoomScale = 1.0
         zoomScrollView.maximumZoomScale = 4.0
@@ -142,10 +149,109 @@
         headlineImageView.clipsToBounds = true
     }
     
+    func saveToShadchanMatchIdeasAndUpdateHud(hudView: HudView) {
+          
+           ref = Database.database().reference()
+           guard let shadchanID = UserInfo.curentUser?.id else {
+               return
+           }
+           let dict = ["userId" : selectedNasiGirl.key]
+           
+           
+           let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
+           
+           let newMatchDict = newMatch.toAnyObject()
+           
+           
+           //let imageName = UUID().uuidString
+           //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+           //let usersRef = Database.database().reference(withPath: "online")
+          // let matchesRef = Database.database().reference(withPath: "nasiMatches")
+           //UUID().uuidString
+           let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
+           
+           ref.child("nasiMatchIdeas").child(shadchanID).child(boyAndGirlNames).setValue(newMatchDict){
+               (error, ref) in
+                     
+               if error != nil {
+                   //print(error?.localizedDescription ?? “”)
+                         
+                } else {
+                hudView.text = "Save Successful!"
+                         
+                }
+               }
+             }
+    
+    
+    func setupNavBarWithUser() {
+     //func setupNavBarWithUser(_ user: User) {
+            //messages.removeAll()
+            //messagesDictionary.removeAll()
+            //tableView.reloadData()
+            
+            //observeUserMessages()
+            
+            let titleView = UIView()
+            titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+            titleView.backgroundColor = UIColor.red
+            
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            titleView.addSubview(containerView)
+            
+            let profileImageView = UIImageView()
+            profileImageView.translatesAutoresizingMaskIntoConstraints = false
+            profileImageView.contentMode = .scaleAspectFill
+            profileImageView.layer.cornerRadius = 20
+            profileImageView.clipsToBounds = true
+            profileImageView.backgroundColor = UIColor.gray
+            profileImageView.image = UIImage(named: "face04")
+            //if let profileImageUrl = user.profileImageUrl {
+           //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+           // }
+            
+            containerView.addSubview(profileImageView)
+            
+            //ios 9 constraint anchors
+            //need x,y,width,height anchors
+            profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+            profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            let nameLabel = UILabel()
+            nameLabel.backgroundColor = UIColor.white
+            
+            containerView.addSubview(nameLabel)
+            nameLabel.text =  "Moshe Pogrow"   //user.name
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            //need x,y,width,height anchors
+            nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+            nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+            nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+            
+            containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+            containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+            
+            self.navigationItem.titleView = titleView
+            
+    //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+        }
+    
+  
+    
+    
+    
+    
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setStatusLabelAndSaveToResearchButton()
+        //setStatusLabelAndSaveToResearchButton()
         
         // check if in sent list - if in list set flag
         // update the button tile and label text
@@ -190,7 +296,7 @@
                 
                 // invoke the function that takes the bool value
                 // and tells the user what list current girl is in
-                self.setStatusLabelAndSaveToResearchButton()
+                //self.setStatusLabelAndSaveToResearchButton()
                 }
              }
          })
@@ -225,7 +331,7 @@
                       // if girl is in research list we save
                       // its autoID within the research list
                       self.childAutoIDKeyInResearchList = snapshot!.key
-                      self.setStatusLabelAndSaveToResearchButton()
+                    //  self.setStatusLabelAndSaveToResearchButton()
                 }
              }
           })
@@ -252,11 +358,11 @@
             profileProjectStatusLabel.isHidden = false
             profileProjectStatusLabel.textColor = .lightGray
             
-            saveToResearchButton.isHidden = true
-            saveToResearchButton.isEnabled = false
-            saveToResearchButton.backgroundColor = .white
-            saveToResearchButton.setTitleColor(.lightGray, for: .disabled)
-            saveToResearchButton.setTitle("Already saved In Research List", for: .disabled)
+//            saveToResearchButton.isHidden = true
+//            saveToResearchButton.isEnabled = false
+//            saveToResearchButton.backgroundColor = .white
+//            saveToResearchButton.setTitleColor(.lightGray, for: .disabled)
+//            saveToResearchButton.setTitle("Already saved In Research List", for: .disabled)
         }
         
         if isAlreadyInSentList == true && isAlreadyInResearchList == false {
@@ -265,18 +371,18 @@
             profileProjectStatusLabel.text = "Already saved in Sent List"
             profileProjectStatusLabel.textColor = .lightGray
             
-            saveToResearchButton.isHidden = true
-            saveToResearchButton.isEnabled = false
-            saveToResearchButton.backgroundColor = .white
-            saveToResearchButton.setTitleColor(.lightGray, for: .disabled)
-             saveToResearchButton.setTitle("Already saved in Sent List", for: .disabled)
+//            saveToResearchButton.isHidden = true
+//            saveToResearchButton.isEnabled = false
+//            saveToResearchButton.backgroundColor = .white
+//            saveToResearchButton.setTitleColor(.lightGray, for: .disabled)
+//             saveToResearchButton.setTitle("Already saved in Sent List", for: .disabled)
         }
         
         if isAlreadyInResearchList == false && isAlreadyInSentList == false {
            
             profileProjectStatusLabel.text = "Not saved to any list yet"
-            saveToResearchButton.isEnabled = true
-            saveToResearchButton.backgroundColor = .white
+ //           saveToResearchButton.isEnabled = true
+//            saveToResearchButton.backgroundColor = .white
             
         }
     }
@@ -302,7 +408,7 @@
            } else {
             
            self.isAlreadyInResearchList = true
-           self.setStatusLabelAndSaveToResearchButton()
+         //  self.setStatusLabelAndSaveToResearchButton()
            }
         }
     }

@@ -71,6 +71,10 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
             let key = selectedNasiBoy.key
             
             // get the current reference to current boy
+            let firstName = selectedNasiBoy.boyFirstName
+            let lastName = selectedNasiBoy.boyLastName
+            let boysName = firstName + lastName
+            let currentBoysRef = allNasiBoysRef.child(boysName)
             let usersCurrentBoyRef = allNasiBoysRef.child(myId).child(key)
             
             

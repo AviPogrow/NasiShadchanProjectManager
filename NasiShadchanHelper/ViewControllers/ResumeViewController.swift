@@ -15,6 +15,7 @@ class ResumeViewController: UITableViewController {
     
    
     var selectedNasiGirl: NasiGirl!
+    var selectedNasiBoy: NasiBoy!
     
     // Section 1
     @IBOutlet weak var imgVwUserDP: UIImageView!
@@ -40,6 +41,9 @@ class ResumeViewController: UITableViewController {
     var localImageURL: URL!
 
     var ref: DatabaseReference!
+    
+    let matchesRef = Database.database().reference(withPath: "nasiMatches")
+    
     var sentSegmentChildArr = [[String : String]]()
     
     // function get sent resume list
@@ -67,7 +71,65 @@ class ResumeViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupNavBarWithUser()
     }
+    
+    func setupNavBarWithUser() {
+        //func setupNavBarWithUser(_ user: User) {
+               //messages.removeAll()
+               //messagesDictionary.removeAll()
+               //tableView.reloadData()
+               
+               //observeUserMessages()
+               
+               let titleView = UIView()
+               titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+               titleView.backgroundColor = UIColor.red
+               
+               let containerView = UIView()
+               containerView.translatesAutoresizingMaskIntoConstraints = false
+               titleView.addSubview(containerView)
+               
+               let profileImageView = UIImageView()
+               profileImageView.translatesAutoresizingMaskIntoConstraints = false
+               profileImageView.contentMode = .scaleAspectFill
+               profileImageView.layer.cornerRadius = 20
+               profileImageView.clipsToBounds = true
+               profileImageView.backgroundColor = UIColor.gray
+               //if let profileImageUrl = user.profileImageUrl {
+              //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+              // }
+           
+               profileImageView.image = UIImage(named: "face04")
+               
+               containerView.addSubview(profileImageView)
+               
+               //ios 9 constraint anchors
+               //need x,y,width,height anchors
+               profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+               profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+               profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+               profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+               
+               let nameLabel = UILabel()
+               nameLabel.backgroundColor = UIColor.white
+               
+               containerView.addSubview(nameLabel)
+               nameLabel.text =  "Moshe Pogrow"   //user.name
+               nameLabel.translatesAutoresizingMaskIntoConstraints = false
+               //need x,y,width,height anchors
+               nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+               nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+               nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+               nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+               
+               containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+               containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+               
+               self.navigationItem.titleView = titleView
+               
+       //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+           }
     
     
   
@@ -127,27 +189,27 @@ class ResumeViewController: UITableViewController {
          }
         
         
-        if isAddedInResearch == false  && isAlreadyInSent == true {
+       // if isAddedInResearch == false  && isAlreadyInSent == true {
             
-             hudView.text = "Already In Sent List"
+       //      hudView.text = "Already In Sent List"
             
-        } else if isAddedInResearch == false && isAlreadyInSent == false {
+      //  } else if isAddedInResearch == false && isAlreadyInSent == false {
            
-            hudView.text = "Adding To Sent List"
-            saveToSentSegmentAndUpdateHud(hudView: hudView)
+       //     hudView.text = "Adding To Sent List"
+            saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
             
-        } else if isAddedInResearch == true && isAlreadyInSent == false {
-            print("we need  to delete from research list and add to sent list")
+       // } else if isAddedInResearch == true && isAlreadyInSent == false {
+       //     print("we need  to delete from research list and add to sent list")
             
             
-            hudView.text = "Moving From Research List To Sent List"
+       //     hudView.text = "Moving From Research List To Sent List"
             
-          checkResearchListAndStoreAutoIDKey()
+      //    checkResearchListAndStoreAutoIDKey()
             //removeFromResearchList()
             
-            saveToSentSegmentAndUpdateHud(hudView: hudView)
+            saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
         }
-    }
+   // }
     
     
     private func setUpProfilePhoto() {
@@ -491,19 +553,46 @@ extension ResumeViewController {
     @IBAction func btnShareResumePhotoTapped(_ sender: Any) {
         self.shareResumeAndPhoto()
         
-        
-      
     }
     
-    func saveToSentSegmentAndUpdateHud(hudView: HudView) {
+    func saveToSentShadchanMatchesAndUpdateHud(hudView: HudView) {
         if isAlreadyInSent {
             return
         }
         ref = Database.database().reference()
-        guard let myId = UserInfo.curentUser?.id else {
+        guard let shadchanID = UserInfo.curentUser?.id else {
             return
         }
         let dict = ["userId" : selectedNasiGirl.key]
+        
+        
+        let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
+        
+        let newMatchDict = newMatch.toAnyObject()
+        
+        
+        //let imageName = UUID().uuidString
+        //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+        //let usersRef = Database.database().reference(withPath: "online")
+       // let matchesRef = Database.database().reference(withPath: "nasiMatches")
+        //UUID().uuidString
+        let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
+        
+        ref.child("sentNasiMatches").child(shadchanID).child(boyAndGirlNames).setValue(newMatchDict){
+            (error, ref) in
+                  
+            if error != nil {
+                //print(error?.localizedDescription ?? “”)
+                      
+             } else {
+             hudView.text = "Save Successful!"
+                      
+             }
+            }
+          }
+
+
+    /*
         ref.child("sentsegment").child(myId).childByAutoId().setValue(dict) {
             (error, ref) in
             
@@ -517,6 +606,7 @@ extension ResumeViewController {
         }
     }
     
+ */
     
     func checkResearchListAndStoreAutoIDKey() {
         

@@ -18,12 +18,75 @@ class CategoriesViewController: UIViewController {
     
     //var arrGirlsList = [NasiGirlsList]()
     var arrayOfNasiGirls = [NasiGirl]()
+    var selectedNasiBoy: NasiBoy!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
       fetchAndCreateNasiGirlsArray()
+      setupNavBarWithUser()
     }
+    
+     func setupNavBarWithUser() {
+     //func setupNavBarWithUser(_ user: User) {
+            //messages.removeAll()
+            //messagesDictionary.removeAll()
+            //tableView.reloadData()
+            
+            //observeUserMessages()
+            
+            let titleView = UIView()
+            titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+            titleView.backgroundColor = UIColor.red
+            
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            titleView.addSubview(containerView)
+            
+            let profileImageView = UIImageView()
+            profileImageView.translatesAutoresizingMaskIntoConstraints = false
+            profileImageView.contentMode = .scaleAspectFill
+            profileImageView.layer.cornerRadius = 20
+            profileImageView.clipsToBounds = true
+            profileImageView.backgroundColor = UIColor.gray
+            //if let profileImageUrl = user.profileImageUrl {
+           //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+           // }
+        
+            profileImageView.image = UIImage(named: "face04")
+            
+            containerView.addSubview(profileImageView)
+            
+            //ios 9 constraint anchors
+            //need x,y,width,height anchors
+            profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+            profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            let nameLabel = UILabel()
+            nameLabel.backgroundColor = UIColor.white
+            
+            containerView.addSubview(nameLabel)
+            nameLabel.text =  "Moshe Pogrow"   //user.name
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            //need x,y,width,height anchors
+            nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+            nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+            nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+            
+            containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+            containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+            
+            self.navigationItem.titleView = titleView
+            
+    //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+        }
+    
+    
+    
+    
     
     
     func fetchAndCreateNasiGirlsArray() {
@@ -184,6 +247,7 @@ class CategoriesViewController: UIViewController {
         if segue.identifier == "AllNasiGirls" {
             let controller = segue.destination as! AllNasiGirlsViewController
             controller.allNasiGirlsList  = arrayOfNasiGirls
+            controller.selectedNasiBoy = selectedNasiBoy
             
         }
         
@@ -197,6 +261,7 @@ class CategoriesViewController: UIViewController {
             
             let controller = segue.destination as! FullTimeYeshivaViewController
             controller.arrGirlsList = arrayOfNasiGirls
+            controller.selectedNasiBoy = selectedNasiBoy
             
         } else if segue.identifier == "ShowFullTimeCollege/Working" {
             
@@ -208,6 +273,7 @@ class CategoriesViewController: UIViewController {
             
             let controller = segue.destination as! FullTimeCollegeWorkingViewController
                 controller.arrGirlsList = arrayOfNasiGirls
+            controller.selectedNasiBoy = selectedNasiBoy
             
             } else if segue.identifier  == "ShowYeshivaAndCollege/Working" {
             
@@ -219,6 +285,7 @@ class CategoriesViewController: UIViewController {
             
             let controller = segue.destination as! YeshivaAndCollegeWorkingViewController
             controller.arrGirlsList = arrayOfNasiGirls
+            controller.selectedNasiBoy = selectedNasiBoy
         }
     }
 }

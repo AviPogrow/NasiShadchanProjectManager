@@ -51,6 +51,8 @@
 		3DD45D7A25BB3C510025381B /* BackspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45D7925BB3C510025381B /* BackspaceCell.swift */; };
 		3DD45D7C25BB3C870025381B /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45D7B25BB3C870025381B /* UIView+Layout.swift */; };
 		3DD45D7E25BB3D650025381B /* GreenCallButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45D7D25BB3D650025381B /* GreenCallButtonCell.swift */; };
+		3DD45DA625C09C520025381B /* SingleBoysTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45DA525C09C520025381B /* SingleBoysTableCell.swift */; };
+		3DD45DA825C0BE090025381B /* NasiMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45DA725C0BE090025381B /* NasiMatch.swift */; };
 		CE3AC07424536729006B9FEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AC07324536729006B9FEA /* AppDelegate.swift */; };
 		CE3AC07824536729006B9FEA /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AC07724536729006B9FEA /* CategoriesViewController.swift */; };
 		CE3AC07B24536729006B9FEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3AC07924536729006B9FEA /* Main.storyboard */; };
@@ -137,6 +139,8 @@
 		3DD45D7925BB3C510025381B /* BackspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackspaceCell.swift; sourceTree = "<group>"; };
 		3DD45D7B25BB3C870025381B /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		3DD45D7D25BB3D650025381B /* GreenCallButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenCallButtonCell.swift; sourceTree = "<group>"; };
+		3DD45DA525C09C520025381B /* SingleBoysTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleBoysTableCell.swift; sourceTree = "<group>"; };
+		3DD45DA725C0BE090025381B /* NasiMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiMatch.swift; sourceTree = "<group>"; };
 		690419FF2D95D46817B237C4 /* Pods-NasiShadchanHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NasiShadchanHelper.debug.xcconfig"; path = "Target Support Files/Pods-NasiShadchanHelper/Pods-NasiShadchanHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		CE3AC07024536729006B9FEA /* NasiShadchanHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NasiShadchanHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3AC07324536729006B9FEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 		18A37F9E252F8A7E009C6BEB /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				3DD45DA525C09C520025381B /* SingleBoysTableCell.swift */,
 				CE525A75246366ED00CBEC41 /* HTCollegeTableViewCell.swift */,
 				CEF80D212460BBBC009FE684 /* FTCollegeTableViewCell.swift */,
 				CE3AC0AB2454650F006B9FEA /* SingleTableViewCell.swift */,
@@ -371,6 +376,7 @@
 				18AB903D252DC21100D9FCAB /* UserInfo.swift */,
 				18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */,
 				3D6C74F225B773E80008C5A3 /* NasiBoy.swift */,
+				3DD45DA725C0BE090025381B /* NasiMatch.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -712,6 +718,7 @@
 				3DD45D7E25BB3D650025381B /* GreenCallButtonCell.swift in Sources */,
 				CE428D52248134AD00C34EAB /* User.swift in Sources */,
 				184F985C252C696100187D72 /* AuthNavViewController.swift in Sources */,
+				3DD45DA625C09C520025381B /* SingleBoysTableCell.swift in Sources */,
 				3D9DA72025AE0DEA0056F656 /* AllNasiGirlsViewController.swift in Sources */,
 				3DD45D7625BB3BD30025381B /* KeyCell.swift in Sources */,
 				CEC468E0245C60120071EC85 /* YeshivaAndCollegeWorkingViewController.swift in Sources */,
@@ -727,6 +734,7 @@
 				3D9DA71E25ACCEB10056F656 /* ViewResumeVCViewController.swift in Sources */,
 				3DC1849F258C13AD00B529F0 /* NasiGirl.swift in Sources */,
 				18AB903E252DC21100D9FCAB /* UserInfo.swift in Sources */,
+				3DD45DA825C0BE090025381B /* NasiMatch.swift in Sources */,
 				3DC1849B258BBBF600B529F0 /* SentViewController.swift in Sources */,
 				CE75EBBF2465CBFA0056A1D7 /* SavedSingleTableViewCell.swift in Sources */,
 				3DC18499258BA4DA00B529F0 /* ShadchanProjectsViewController.swift in Sources */,
