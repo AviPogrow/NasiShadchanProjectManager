@@ -17,6 +17,9 @@ class SingleBoysTableCell: UITableViewCell {
     
     
     @IBOutlet weak var contactNameLabel: UILabel!
+    
+    @IBOutlet weak var shadchanIDLabel: UILabel!
+    
 }
     
     

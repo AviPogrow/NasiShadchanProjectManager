@@ -30,6 +30,7 @@
 		18AB903C252DBACA00D9FCAB /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB903B252DBACA00D9FCAB /* HomeTabBarController.swift */; };
 		18AB903E252DC21100D9FCAB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB903D252DC21100D9FCAB /* UserInfo.swift */; };
 		18E5DD152525CBCE005DD1DE /* NasiGirlsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */; };
+		3D0B7C1E25CD5AE30058DDA6 /* AllMatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */; };
 		3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */; };
 		3D6C74F325B773E80008C5A3 /* NasiBoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F225B773E80008C5A3 /* NasiBoy.swift */; };
 		3D6C74F525B77A300008C5A3 /* AddEditBoyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */; };
@@ -118,6 +119,7 @@
 		18AB903B252DBACA00D9FCAB /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		18AB903D252DC21100D9FCAB /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiGirlsList.swift; sourceTree = "<group>"; };
+		3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMatchesViewController.swift; sourceTree = "<group>"; };
 		3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBoysViewController.swift; sourceTree = "<group>"; };
 		3D6C74F225B773E80008C5A3 /* NasiBoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiBoy.swift; sourceTree = "<group>"; };
 		3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditBoyViewController.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				3DD45D7525BB3BD30025381B /* KeyCell.swift */,
 				3DD45D7725BB3C170025381B /* DialedNumbersHeader.swift */,
 				3DD45D7925BB3C510025381B /* BackspaceCell.swift */,
+				3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */,
 				CE3AC0AC2454650F006B9FEA /* SingleTableViewCell.swift in Sources */,
 				3DD45D7425BB3B7B0025381B /* AdminCollectionViewController.swift in Sources */,
+				3D0B7C1E25CD5AE30058DDA6 /* AllMatchesViewController.swift in Sources */,
 				CE525A702461B55300CBEC41 /* UIImage+Resize.swift in Sources */,
 				CE3AC0A6245383A0006B9FEA /* FullTimeYeshivaViewController.swift in Sources */,
 				184F2F50252ADCDA00252C97 /* Constant.swift in Sources */,

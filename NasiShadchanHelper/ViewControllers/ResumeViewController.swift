@@ -58,6 +58,21 @@ class ResumeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
+        
+        print("the selectedNasi boy is \(selectedNasiBoy.boyLastName)")
+        
+        
+        
+        print("the selectedGirl is\(selectedNasiGirl.firstNameOfGirl)")
+        
+        
+        
+        
+        
+        
         checkSentList()
         downloadDocument()
         downloadProfileImage()
@@ -73,6 +88,48 @@ class ResumeViewController: UITableViewController {
         super.viewDidAppear(animated)
         setupNavBarWithUser()
     }
+    
+    
+    @IBAction func saveToReddsList(_ sender: Any) {
+        
+        print("save to redds list invoked")
+        saveToShadchanMatchIdeasAndUpdateHud()
+    
+    }
+    
+    func saveToShadchanMatchIdeasAndUpdateHud() {
+           ref = Database.database().reference()
+              guard let shadchanID = UserInfo.curentUser?.id else {
+                  return
+              }
+            
+              
+              
+           let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
+              
+              let newMatchDict = newMatch.toAnyObject()
+              
+              
+              //let imageName = UUID().uuidString
+              //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+              //let usersRef = Database.database().reference(withPath: "online")
+             // let matchesRef = Database.database().reference(withPath: "nasiMatches")
+              //UUID().uuidString
+              let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
+              
+              ref.child("nasiShidduchRedds").child(boyAndGirlNames).setValue(newMatchDict){
+                  (error, ref) in
+                        
+                  if error != nil {
+                      //print(error?.localizedDescription ?? “”)
+                            
+                   } else {
+                   //hudView.text = "Save Successful!"
+                            
+                   }
+                  }
+                }
+  
     
     func setupNavBarWithUser() {
         //func setupNavBarWithUser(_ user: User) {
@@ -136,7 +193,8 @@ class ResumeViewController: UITableViewController {
     
   
     
-    
+    // check the sent list for this user and if there set the flat
+    // alreadyInSent to true
     func checkSentList() {
            guard let myId = UserInfo.curentUser?.id else {
                 return
@@ -196,7 +254,7 @@ class ResumeViewController: UITableViewController {
       //  } else if isAddedInResearch == false && isAlreadyInSent == false {
            
        //     hudView.text = "Adding To Sent List"
-            saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
+           // saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
             
        // } else if isAddedInResearch == true && isAlreadyInSent == false {
        //     print("we need  to delete from research list and add to sent list")
@@ -285,6 +343,7 @@ class ResumeViewController: UITableViewController {
                    print("*****User completed activity****")
                 
                 self.checkStatusBeforeSavingToSent()
+                //self.saveToShadchanMatchIdeasAndUpdateHud()
                 
                    } else {
                    print("user cancelled the activityController")
@@ -299,40 +358,32 @@ class ResumeViewController: UITableViewController {
     
     func shareResumeOnly() {
         
-        
-        
-        
-        
+        //1. check that we have valid pdf url and image url
         if localURL != nil && localImageURL != nil {
             
+        //2. enable both buttons that were disable during donwload
         btnShareResumeOnly.isEnabled = true
         btnShareResumeAndPhoto.isEnabled = true
     
+       // 3. convert pdf at localURL to an image
        let documentAsImage = drawPDFfromURL(url: localURL)
         
+        // 4. set up the message string
         let textMessageString = "This is the resume of " +
                     "\(selectedNasiGirl.nameSheIsCalledOrKnownBy) " +
                 "\(selectedNasiGirl.lastNameOfGirl)"
             
-       
+        
+        // 5. pass the two objects to the activity controller
         let activityVC = UIActivityViewController(activityItems: [textMessageString, documentAsImage!], applicationActivities: [])
             
             
+        // if we are in iPad we need to adapt and present the
+        // activity vc as a popover
         if UIDevice.current.userInterfaceIdiom == .pad {
-                                        
-                  activityVC.modalPresentationStyle = .popover
-                                       
-                  //activityVC.popoverPresentationController?.barButtonItem = rightBarButton
-                       activityVC.popoverPresentationController?.sourceView = btnShareResumeOnly
-                                       
-                  }
-            
-            
-        // if UIDevice.current.userInterfaceIdiom == .pad {
-                //     activityVC.popoverPresentationController?//.barButtonItem = barButtonItem
-            //     }
-
-                
+            activityVC.modalPresentationStyle = .popover
+            activityVC.popoverPresentationController?.sourceView = btnShareResumeOnly
+        }
         
         activityVC.excludedActivityTypes = [
             UIActivity.ActivityType.postToWeibo,
@@ -359,6 +410,7 @@ class ResumeViewController: UITableViewController {
                 print("*****User completed activity")
                     
                 self.checkStatusBeforeSavingToSent()
+                //self.saveToShadchanMatchIdeasAndUpdateHud()
                 
                 } else {
                 print("user cancelled the activityController")
@@ -555,17 +607,20 @@ extension ResumeViewController {
         
     }
     
+    
+    
+    
+    
     func saveToSentShadchanMatchesAndUpdateHud(hudView: HudView) {
-        if isAlreadyInSent {
-            return
-        }
+        
+        //if isAlreadyInSent {
+       //     return
+       // }
         ref = Database.database().reference()
+        
         guard let shadchanID = UserInfo.curentUser?.id else {
             return
         }
-        let dict = ["userId" : selectedNasiGirl.key]
-        
-        
         let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
         
         let newMatchDict = newMatch.toAnyObject()
@@ -577,6 +632,7 @@ extension ResumeViewController {
        // let matchesRef = Database.database().reference(withPath: "nasiMatches")
         //UUID().uuidString
         let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
+        
         
         ref.child("sentNasiMatches").child(shadchanID).child(boyAndGirlNames).setValue(newMatchDict){
             (error, ref) in
@@ -671,8 +727,139 @@ extension ResumeViewController {
         }
     }
 }
-        
+
+extension ResumeViewController: MFMailComposeViewControllerDelegate {
     
+     @IBAction func sendEmailWithJustResume(sender: UIButton) {
+         if MFMailComposeViewController.canSendMail() {
+            
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.setSubject("Update about ios tutorials")
+            mailComposer.setMessageBody("What is the update about ios tutorials on youtube", isHTML: false)
+                  
+            mailComposer.setToRecipients(["rpogrow@gmail.com"])
+            
+            // get the resume as the attachment
+            guard let filePath = Bundle.main.path(forResource: "SimplePDF", ofType: "pdf") else {return}
+            
+            let url = URL(fileURLWithPath: filePath)
+                       
+            do {
+            let attachmentData = try Data(contentsOf: url)
+            mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "SimplePDF")
+                
+                
+                
+            mailComposer.mailComposeDelegate = self
+            self.present(mailComposer, animated: true
+                               , completion: nil)
+            } catch let error {
+            print("We have encountered error \(error.localizedDescription)")
+            }
+            
+        
+            } else {
+                   print("Email is not configured in settings app or we are not able to send an email")
+               }
+           }
+             
+                
+    @IBAction func sendEmailWithPhotoAndResume(sender: UIButton) {
+        if MFMailComposeViewController.canSendMail() {
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.setSubject("Update about ios tutorials")
+        mailComposer.setMessageBody("What is the update about ios tutorials on youtube", isHTML: false)
+        mailComposer.setToRecipients(["rpogrow@gmail.com"])
+            
+        guard let filePath = Bundle.main.path(forResource: "SimplePDF", ofType: "pdf")
+        else {
+            return
+        }
+        let url = URL(fileURLWithPath: filePath)
+                       
+        do {
+        let attachmentData = try Data(contentsOf: url)
+        mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "SimplePDF")
+        mailComposer.mailComposeDelegate = self
+        self.present(mailComposer, animated: true, completion: nil)
+            } catch let error {
+            print("We have encountered error \(error.localizedDescription)")
+        }
+        mailComposer.mailComposeDelegate = self
+                  
+        self.present(mailComposer, animated: true
+                           , completion: nil)
+          } else {
+            print("Email is not configured in settings app or we are not able to send an email")
+            }
+    }
+    
+   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            print("User cancelled")
+            break
+            
+        case .saved:
+            print("Mail is saved by user")
+            break
+            
+        case .sent:
+           saveToShadchanMatchIdeasAndUpdateHud()
+           print("save to redds list invoked")
+            //break
+            
+        case .failed:
+            print("Sending mail is failed")
+            break
+        default:
+            break
+        }
+        
+        controller.dismiss(animated: true)
+    }
+}
+
+extension ResumeViewController: MFMessageComposeViewControllerDelegate{
+    
+    func sendTextWithResumeAndPhoto() {
+        if !MFMessageComposeViewController.canSendText() {
+        print("SMS services are not available")
+        }
+        
+    let composeVC = MFMessageComposeViewController()
+    composeVC.messageComposeDelegate = self
+     
+    // Configure the fields of the interface.
+    composeVC.recipients = ["4085551212"]
+    composeVC.body = "Hello from California!"
+     
+    // Present the view controller modally.
+    self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func sendTextWithJustResume() {
+        if !MFMessageComposeViewController.canSendText() {
+            print("SMS services are not available")
+        }
+    let composeVC = MFMessageComposeViewController()
+    composeVC.messageComposeDelegate = self
+     
+    // Configure the fields of the interface.
+    composeVC.recipients = ["4085551212"]
+    composeVC.body = "Hello from California!"
+     
+    // Present the view controller modally.
+    self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController,
+        didFinishWith result: MessageComposeResult) {
+    
+     controller.dismiss(animated: true, completion: nil)}
+    }
+    
+
    
    
    

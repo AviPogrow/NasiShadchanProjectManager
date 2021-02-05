@@ -31,6 +31,8 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
         
         if selectedNasiBoy != nil {
             
+             guard let myId = UserInfo.curentUser?.id else {return}
+            
             boysLastNameTextField.text = selectedNasiBoy.boyLastName
             boysFirstNameTextField.text = selectedNasiBoy.boyFirstName
             
@@ -55,6 +57,9 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
          // editing
          if let selectedNasiBoy = selectedNasiBoy {
             
+            guard let myId = UserInfo.curentUser?.id else {return}
+            selectedNasiBoy.addedByShadchanUserID = myId
+            
             selectedNasiBoy.boyLastName =  boysLastNameTextField.text!
             selectedNasiBoy.boyFirstName = boysFirstNameTextField.text!
             selectedNasiBoy.decisionMakerLastName = contactsLastNameTextField.text!
@@ -65,7 +70,7 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
             
             let dictionaryForFB = selectedNasiBoy.toAnyObject()
             
-    guard let myId = UserInfo.curentUser?.id else {return}
+    
           
             let ref = selectedNasiBoy.ref
             let key = selectedNasiBoy.key
@@ -75,10 +80,10 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
             let lastName = selectedNasiBoy.boyLastName
             let boysName = firstName + lastName
             let currentBoysRef = allNasiBoysRef.child(boysName)
-            let usersCurrentBoyRef = allNasiBoysRef.child(myId).child(key)
+            //let usersCurrentBoyRef = allNasiBoysRef.child(boysName).child(key)
             
             
-            usersCurrentBoyRef.updateChildValues(dictionaryForFB as! [AnyHashable : Any])
+            currentBoysRef.updateChildValues(dictionaryForFB as! [AnyHashable : Any])
             
             
             
@@ -91,16 +96,19 @@ let allNasiBoysRef = Database.database().reference().child("NasiBoysList")
     
     func addNasiBoyToShadchansBoyList() {
         
-        let newNasiBoy =
-                NasiBoy(decisionMakerLastName: contactsLastNameTextField.text ?? "N/A", decisionMakerFirstName: contactsFirstNameTextField.text ?? "N/A", decisionMakerCell: contactsCellTextField.text ?? "N/A", decisionMakerEmail: contactsEmailTextField.text ?? "N/A", boyLastName: boysLastNameTextField.text ?? "N/A", boyFirstName: boysFirstNameTextField.text ?? "N/A")
-        
         guard let myId = UserInfo.curentUser?.id else {
-                 return
-        }
+                        return
+               }
+        
+        let newNasiBoy =
+            NasiBoy(addedByShadchanUserID: myId, decisionMakerLastName:  contactsLastNameTextField.text ?? "N/A", decisionMakerFirstName: contactsFirstNameTextField.text ?? "N/A", decisionMakerCell: contactsCellTextField.text ?? "N/A", decisionMakerEmail: contactsEmailTextField.text ?? "N/A", boyLastName: boysLastNameTextField.text ?? "N/A", boyFirstName: boysFirstNameTextField.text ?? "N/A")
+        
+       
         
         let dict = newNasiBoy.toAnyObject()
-               
-        allNasiBoysRef.child(myId).childByAutoId().setValue(dict)
+        
+        let boysName = newNasiBoy.boyFirstName + newNasiBoy.boyLastName
+        allNasiBoysRef.child(boysName).setValue(dict)
         
         }
     

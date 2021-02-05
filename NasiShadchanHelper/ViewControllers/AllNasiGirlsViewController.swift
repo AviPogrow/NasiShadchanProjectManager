@@ -72,7 +72,7 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
                nameLabel.backgroundColor = UIColor.white
                
                containerView.addSubview(nameLabel)
-               nameLabel.text =  "Moshe Pogrow"   //user.name
+        nameLabel.text = selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
                nameLabel.translatesAutoresizingMaskIntoConstraints = false
                //need x,y,width,height anchors
                nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -142,6 +142,7 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
                    let currentGirl = allNasiGirlsList[indexPath.row]
                    
                    controller.selectedNasiGirl = currentGirl
+                controller.selectedNasiBoy = selectedNasiBoy
             }
         }
     }

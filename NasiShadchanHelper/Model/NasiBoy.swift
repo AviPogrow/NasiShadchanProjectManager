@@ -19,6 +19,7 @@ class NasiBoy: NSObject {
     var  decisionMakerCell: String = ""
     var  decisionMakerEmail: String = ""
     var  addedByShadchanUserID: String = ""
+    var  dateCreated: String = ""
     
      // init swift object from firebase api call
      init(snapshot: DataSnapshot) {
@@ -50,6 +51,7 @@ class NasiBoy: NSObject {
         self.boyLastName = boyLastName
         self.boyFirstName = boyFirstName
         
+        self.dateCreated = "\(Date())"
     
     }
     
@@ -67,6 +69,8 @@ class NasiBoy: NSObject {
       self.decisionMakerEmail = decisionMakerEmail
       self.boyLastName = boyLastName
       self.boyFirstName = boyFirstName
+        
+      self.dateCreated = "\(Date())"
     
     }
     
@@ -80,7 +84,8 @@ class NasiBoy: NSObject {
          "decisionMakerCell": decisionMakerCell,
          "decisionMakerEmail": decisionMakerEmail,
          "boyLastName": boyLastName,
-         "boyFirstName":boyFirstName
+         "boyFirstName":boyFirstName,
+         "dateCreated": dateCreated
          
          
        ]

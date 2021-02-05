@@ -118,7 +118,7 @@ class YeshivaAndCollegeWorkingViewController: UIViewController, UITableViewDeleg
             nameLabel.backgroundColor = UIColor.white
             
             containerView.addSubview(nameLabel)
-            nameLabel.text =  "Moshe Pogrow"   //user.name
+        nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             //need x,y,width,height anchors
             nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -228,7 +228,7 @@ class YeshivaAndCollegeWorkingViewController: UIViewController, UITableViewDeleg
                 let currentSingle = arrFilterList[indexPath.row]
               
                 controller.selectedNasiGirl = currentSingle
-                
+                controller.selectedNasiBoy = selectedNasiBoy
             
                 
                 /*

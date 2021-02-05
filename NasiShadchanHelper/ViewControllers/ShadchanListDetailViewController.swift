@@ -113,8 +113,7 @@
      override func viewDidLoad() {
          super.viewDidLoad()
         
-        
-       setupNavBarWithUser()
+        setupNavBarWithUser()
         
         zoomScrollView.minimumZoomScale = 1.0
         zoomScrollView.maximumZoomScale = 4.0
@@ -149,16 +148,20 @@
         headlineImageView.clipsToBounds = true
     }
     
-    func saveToShadchanMatchIdeasAndUpdateHud(hudView: HudView) {
-          
-           ref = Database.database().reference()
+    
+    @IBAction func justAddToShidduchIdeasTapped(_ sender: Any) {
+        saveToShadchanMatchIdeasAndUpdateHud()
+    }
+    
+    func saveToShadchanMatchIdeasAndUpdateHud() {
+        ref = Database.database().reference()
            guard let shadchanID = UserInfo.curentUser?.id else {
                return
            }
            let dict = ["userId" : selectedNasiGirl.key]
            
            
-           let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
+        let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
            
            let newMatchDict = newMatch.toAnyObject()
            
@@ -170,14 +173,14 @@
            //UUID().uuidString
            let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
            
-           ref.child("nasiMatchIdeas").child(shadchanID).child(boyAndGirlNames).setValue(newMatchDict){
+           ref.child("nasiMatchIdeas").child(boyAndGirlNames).setValue(newMatchDict){
                (error, ref) in
                      
                if error != nil {
                    //print(error?.localizedDescription ?? “”)
                          
                 } else {
-                hudView.text = "Save Successful!"
+                //hudView.text = "Save Successful!"
                          
                 }
                }
@@ -224,7 +227,7 @@
             nameLabel.backgroundColor = UIColor.white
             
             containerView.addSubview(nameLabel)
-            nameLabel.text =  "Moshe Pogrow"   //user.name
+            nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             //need x,y,width,height anchors
             nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -707,6 +710,7 @@
              
             let controller = segue.destination as? ResumeViewController 
             controller!.selectedNasiGirl =  selectedNasiGirl
+            controller?.selectedNasiBoy = selectedNasiBoy
             controller?.isAlreadyInSent = isAlreadyInSentList
             controller?.isAddedInResearch = isAlreadyInResearchList
             

@@ -160,7 +160,7 @@ class FullTimeYeshivaViewController: UIViewController, UITableViewDataSource,UIT
                  nameLabel.backgroundColor = UIColor.white
                  
                  containerView.addSubview(nameLabel)
-                 nameLabel.text =  "Moshe Pogrow"   //user.name
+        nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName
                  nameLabel.translatesAutoresizingMaskIntoConstraints = false
                  //need x,y,width,height anchors
                  nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -358,6 +358,7 @@ class FullTimeYeshivaViewController: UIViewController, UITableViewDataSource,UIT
 
       //5. set selectedNasiGirl using current Girl
       controller.selectedNasiGirl = currentGirl
+        controller.selectedNasiBoy = selectedNasiBoy
             
       }
         }

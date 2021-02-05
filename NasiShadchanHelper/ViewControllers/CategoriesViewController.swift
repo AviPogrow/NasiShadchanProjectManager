@@ -23,8 +23,21 @@ class CategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if selectedNasiBoy == nil {
+            
+            selectedNasiBoy = createPlaceHolderBoy()
+        }
+        
       fetchAndCreateNasiGirlsArray()
       setupNavBarWithUser()
+    }
+    
+    func createPlaceHolderBoy() -> NasiBoy {
+        //var  arrayOfNasiBoys = [NasiBoy]()
+        let boy1 = NasiBoy(addedByShadchanUserID: "All", decisionMakerLastName: "<Maker>", decisionMakerFirstName: "<Decision>", decisionMakerCell: "123-456-7899", decisionMakerEmail: "<placeholder@gmail.com>", boyLastName: "<Holder>", boyFirstName: "<Place>")
+        
+        return boy1
+        
     }
     
      func setupNavBarWithUser() {
@@ -68,7 +81,7 @@ class CategoriesViewController: UIViewController {
             nameLabel.backgroundColor = UIColor.white
             
             containerView.addSubview(nameLabel)
-            nameLabel.text =  "Moshe Pogrow"   //user.name
+        nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             //need x,y,width,height anchors
             nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -247,6 +260,13 @@ class CategoriesViewController: UIViewController {
         if segue.identifier == "AllNasiGirls" {
             let controller = segue.destination as! AllNasiGirlsViewController
             controller.allNasiGirlsList  = arrayOfNasiGirls
+            
+            
+         
+            
+            
+            
+            
             controller.selectedNasiBoy = selectedNasiBoy
             
         }
