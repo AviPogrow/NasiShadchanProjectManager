@@ -17,6 +17,9 @@ class ResumeViewController: UITableViewController {
     var selectedNasiGirl: NasiGirl!
     var selectedNasiBoy: NasiBoy!
     
+    @IBOutlet weak var boysShidduchContactLabel: UILabel!
+    
+    
     // Section 1
     @IBOutlet weak var imgVwUserDP: UIImageView!
     @IBOutlet weak var btnShareResumeOnly: UIButton!
@@ -36,8 +39,10 @@ class ResumeViewController: UITableViewController {
                              delegateQueue: nil)
       }()
     
+    //pdf
+    var localResumeURL: URL!
     
-    var localURL: URL!
+    //jpg
     var localImageURL: URL!
 
     var ref: DatabaseReference!
@@ -52,24 +57,15 @@ class ResumeViewController: UITableViewController {
     var isAddedInResearch:Bool = false
     
     var childAutoIDKeyInResearchList : String!
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
-        
-        print("the selectedNasi boy is \(selectedNasiBoy.boyLastName)")
-        
-        
-        
-        print("the selectedGirl is\(selectedNasiGirl.firstNameOfGirl)")
-        
-        
-        
+        boysShidduchContactLabel.text =
+        selectedNasiBoy.decisionMakerFirstName + " " +
+        selectedNasiBoy.decisionMakerLastName + " - " +
+        selectedNasiBoy.decisionMakerEmail + " - " +
+        selectedNasiBoy.decisionMakerCell
         
         
         
@@ -77,47 +73,71 @@ class ResumeViewController: UITableViewController {
         downloadDocument()
         downloadProfileImage()
         
-        btnShareResumeOnly.addRoundedViewCorners(width: 4, colorBorder: Constant.AppColor.colorAppTheme)
-    
-        
-        btnShareResumeAndPhoto.addRoundedViewCorners(width: 4, colorBorder: Constant.AppColor.colorAppTheme)
+        //btnShareResumeOnly.addRoundedViewCorners(width: 4, colorBorder: Constant.AppColor.colorAppTheme)
+        //btnShareResumeAndPhoto.addRoundedViewCorners(width: 4, colorBorder: Constant.AppColor.colorAppTheme)
         
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavBarWithUser()
     }
-    
-    
-    @IBAction func saveToReddsList(_ sender: Any) {
-        
-        print("save to redds list invoked")
-        saveToShadchanMatchIdeasAndUpdateHud()
-    
+
+    @IBAction func sendTextWithJustResume(_ sender: Any) {
+         sendTextJustResume(sender: sender as!  UIButton)
+     
     }
     
-    func saveToShadchanMatchIdeasAndUpdateHud() {
-           ref = Database.database().reference()
-              guard let shadchanID = UserInfo.curentUser?.id else {
-                  return
-              }
+    @IBAction func sendTextWithBothResumeAndPhoto(_ sender: Any) {
+        sendTextBothResumeAndPhoto(sender: sender as! UIButton)
+    }
+    
+    @IBAction func sendEmailWithJustResume(_ sender: Any) {
+        
+        sendEmailWithJustResume(sender: sender as! UIButton)
+    }
+    
+    @IBAction func sendEmailWithBothResumAndPhoto(_ sender: Any) {
+        
+    sendEmailWithBothResumeAndProfileImage(sender: sender as! UIButton)
+       
+    }
+    
+    
+    
+    func saveNewProjectToAllNasiShidduchProjects() {
+      ref = Database.database().reference()
+      guard let shadchanID = UserInfo.curentUser?.id else { return }
             
+      let newShidduchProject = NasiMatch(
+        boyID: selectedNasiBoy.key,
+        boyFirstName: selectedNasiBoy.boyFirstName,
+        boyLastName:selectedNasiBoy.boyLastName,
+        boyProfileImageURLPath: selectedNasiBoy.boyProfileImageURLString ,
+        girlID: selectedNasiGirl.key,
+        girlFirstName: selectedNasiGirl.firstNameOfGirl ,
+        girlLastName: selectedNasiGirl.lastNameOfGirl,
+        girlProfileImageURLPath: selectedNasiGirl.imageDownloadURLString,
+        girlResumeURLPath: selectedNasiGirl.documentDownloadURLString,
+        
+        shadchanID: shadchanID,
+        shadchanFirstName:"",
+        shadchanLastName:"",
+        lastActivity: "",
+        projectStatus: "",
+        nextTask: "Follow Up To Get First Date",
+        projectResult: "Needs Follow Up",
+        decisionMakerFirstName: selectedNasiBoy.decisionMakerFirstName,
+        decisionMakerLastName:selectedNasiBoy.decisionMakerLastName ,
+        decisionMakerEmail: selectedNasiBoy.decisionMakerEmail ,
+        decisionMakerCell: selectedNasiBoy.decisionMakerCell)
+ 
               
+      let newMatchDict = newShidduchProject.toAnyObject()
+      let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + "-" + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
               
-           let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
-              
-              let newMatchDict = newMatch.toAnyObject()
-              
-              
-              //let imageName = UUID().uuidString
-              //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
-              //let usersRef = Database.database().reference(withPath: "online")
-             // let matchesRef = Database.database().reference(withPath: "nasiMatches")
-              //UUID().uuidString
-              let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
-              
-              ref.child("nasiShidduchRedds").child(boyAndGirlNames).setValue(newMatchDict){
+      ref.child("AllNasiShidduchProjects").child(boyAndGirlNames).setValue(newMatchDict){
                   (error, ref) in
                         
                   if error != nil {
@@ -132,12 +152,7 @@ class ResumeViewController: UITableViewController {
   
     
     func setupNavBarWithUser() {
-        //func setupNavBarWithUser(_ user: User) {
-               //messages.removeAll()
-               //messagesDictionary.removeAll()
-               //tableView.reloadData()
-               
-               //observeUserMessages()
+       
                
                let titleView = UIView()
                titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
@@ -157,7 +172,8 @@ class ResumeViewController: UITableViewController {
               //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
               // }
            
-               profileImageView.image = UIImage(named: "face04")
+              let urlString = selectedNasiBoy.boyProfileImageURLString
+               profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
                
                containerView.addSubview(profileImageView)
                
@@ -172,8 +188,8 @@ class ResumeViewController: UITableViewController {
                nameLabel.backgroundColor = UIColor.white
                
                containerView.addSubview(nameLabel)
-               nameLabel.text =  "Moshe Pogrow"   //user.name
-               nameLabel.translatesAutoresizingMaskIntoConstraints = false
+               nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
                //need x,y,width,height anchors
                nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
                nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
@@ -232,224 +248,12 @@ class ResumeViewController: UITableViewController {
             })
          }
     
-    // invoked by completion handler when send is success
-    //
-    func checkStatusBeforeSavingToSent() {
-        
-        let hudView = HudView.hud(inView: self.navigationController!.view, animated: true)
-        //hudView.text = "Checking Profile Status"
-
-         afterDelay(1.9) {
-         hudView.hide()
-         
-         self.navigationController?.popToRootViewController(animated: true)
-            
-         }
-        
-        
-       // if isAddedInResearch == false  && isAlreadyInSent == true {
-            
-       //      hudView.text = "Already In Sent List"
-            
-      //  } else if isAddedInResearch == false && isAlreadyInSent == false {
-           
-       //     hudView.text = "Adding To Sent List"
-           // saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
-            
-       // } else if isAddedInResearch == true && isAlreadyInSent == false {
-       //     print("we need  to delete from research list and add to sent list")
-            
-            
-       //     hudView.text = "Moving From Research List To Sent List"
-            
-      //    checkResearchListAndStoreAutoIDKey()
-            //removeFromResearchList()
-            
-            saveToSentShadchanMatchesAndUpdateHud(hudView: hudView)
-        }
-   // }
-    
-    
     private func setUpProfilePhoto() {
          //imgVwUserDP.loadImageUsingCacheWithUrlString(selectedNasiGirl.imageDownloadURLString)
         imgVwUserDP.loadImageFromUrl(strUrl: selectedNasiGirl.imageDownloadURLString, imgPlaceHolder: "")
         
        
     }
-    
-    func shareResumeAndPhoto() {
-            
-        if localURL != nil && localImageURL != nil {
-        btnShareResumeOnly.isEnabled = true
-        btnShareResumeAndPhoto.isEnabled = true
-        
-          
-           // 3 sharing items
-           // 1 Resume pdf as UIImage
-           let documentAsImage = drawPDFfromURL(url: localURL)
-        _ = documentAsImage?.jpegData(compressionQuality: 0.50)
-           
-           // 2 profile image
-           let shareImageURL = localImageURL!
-           let imageData = try! Data(contentsOf: shareImageURL)
-           let imageToShare = UIImage(data: imageData)
-           
-           // 3 text string
-        var textMessageString: String = ""
-        
-             textMessageString = "This is the resume of " +
-                "\(selectedNasiGirl.nameSheIsCalledOrKnownBy) " +
-            "\(selectedNasiGirl.lastNameOfGirl)"
-        
-        let activityVC =  UIActivityViewController(activityItems: [documentAsImage!,imageToShare!,textMessageString], applicationActivities: [])
-            
-            
-            
-                 
-        if UIDevice.current.userInterfaceIdiom == .pad {
-                                               
-        activityVC.modalPresentationStyle = .popover
-                                              
-           // activityVC.popoverPresentationController?.barButtonItem = rightBarButton
-        activityVC.popoverPresentationController?.sourceView = btnShareResumeAndPhoto
-                                              
-                         }
-            
-           
-           activityVC.excludedActivityTypes = [
-               UIActivity.ActivityType.postToWeibo,
-               UIActivity.ActivityType.print,
-               UIActivity.ActivityType.copyToPasteboard,
-               UIActivity.ActivityType.assignToContact,
-               UIActivity.ActivityType.saveToCameraRoll,
-               UIActivity.ActivityType.addToReadingList,
-               UIActivity.ActivityType.postToFlickr,
-               UIActivity.ActivityType.postToVimeo,
-               UIActivity.ActivityType.postToTencentWeibo,
-               UIActivity.ActivityType.airDrop,
-               UIActivity.ActivityType.openInIBooks,
-               UIActivity.ActivityType(rawValue: "com.apple.reminders.RemindersEditorExtension"),
-               UIActivity.ActivityType(rawValue: "com.apple.reminders.sharingextension")
-           ]
-           
-           //Completion handler
-           activityVC.completionWithItemsHandler = {
-               (activityType: UIActivity.ActivityType?, completed:
-                      Bool, arrayReturnedItems: [Any]?, error: Error?) in
-               print("********completion invoked handler***")
-               print("the activity type was\(activityType.debugDescription)completed is \(completed) array returned items is \(arrayReturnedItems.debugDescription) and error is \(error.debugDescription)")
-               
-               if completed {
-                   print("*****User completed activity****")
-                
-                self.checkStatusBeforeSavingToSent()
-                //self.saveToShadchanMatchIdeasAndUpdateHud()
-                
-                   } else {
-                   print("user cancelled the activityController")
-                   }
-                   if let shareError = error {
-                       print("error while sharing: \(shareError.localizedDescription)")
-                          }
-                      }
-             present(activityVC, animated: true, completion: nil)
-        }
-       }
-    
-    func shareResumeOnly() {
-        
-        //1. check that we have valid pdf url and image url
-        if localURL != nil && localImageURL != nil {
-            
-        //2. enable both buttons that were disable during donwload
-        btnShareResumeOnly.isEnabled = true
-        btnShareResumeAndPhoto.isEnabled = true
-    
-       // 3. convert pdf at localURL to an image
-       let documentAsImage = drawPDFfromURL(url: localURL)
-        
-        // 4. set up the message string
-        let textMessageString = "This is the resume of " +
-                    "\(selectedNasiGirl.nameSheIsCalledOrKnownBy) " +
-                "\(selectedNasiGirl.lastNameOfGirl)"
-            
-        
-        // 5. pass the two objects to the activity controller
-        let activityVC = UIActivityViewController(activityItems: [textMessageString, documentAsImage!], applicationActivities: [])
-            
-            
-        // if we are in iPad we need to adapt and present the
-        // activity vc as a popover
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            activityVC.modalPresentationStyle = .popover
-            activityVC.popoverPresentationController?.sourceView = btnShareResumeOnly
-        }
-        
-        activityVC.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.copyToPasteboard,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo,
-            UIActivity.ActivityType.airDrop,
-            UIActivity.ActivityType.openInIBooks,
-            UIActivity.ActivityType(rawValue: "com.apple.reminders.RemindersEditorExtension"),
-            UIActivity.ActivityType(rawValue: "com.apple.reminders.sharingextension")
-        ]
-        
-        //Completion handler
-        activityVC.completionWithItemsHandler = {
-            (activityType: UIActivity.ActivityType?, completed:
-                   Bool, arrayReturnedItems: [Any]?, error: Error?) in
-            print("***completion invoked handler***")
-            if completed {
-                print("*****User completed activity")
-                    
-                self.checkStatusBeforeSavingToSent()
-                //self.saveToShadchanMatchIdeasAndUpdateHud()
-                
-                } else {
-                print("user cancelled the activityController")
-                }
-                if let shareError = error {
-                    print("error while sharing: \(shareError.localizedDescription)")
-                       }
-                   }
-        
-        present(activityVC, animated: true, completion: nil)
-        }
-    }
-    
-    
-    /*
-    func shareInPopover()
-           {
-               NSString *forwardedString = [[NSString alloc] initWithFormat:@"Check out this leaflet\n\n %@ \n\nself.theURLToShare];
-                   
-               UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:[NSArray arrayWithObjects:forwardedString, nil] applicationActivities:nil];
-
-               if (IDIOM == IPAD)
-               {
-                   NSLog(@"iPad");
-                   activityViewController.popoverPresentationController.sourceView = self.view;
-           //        activityViewController.popoverPresentationController.sourceRect = self.frame;
-
-                  _popover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
-                  _popover.delegate = self;
-                  [_popover presentPopoverFromBarButtonItem:_shareBarButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-               }
-               else
-               {
-                   NSLog(@"iPhone");
-                   [self presentViewController:activityViewController
-                                     animated:YES
-                                   completion:nil];
-               }
- */
     
     func drawPDFfromURL(url: URL) -> UIImage? {
            guard let document = CGPDFDocument(url as CFURL) else { return nil }
@@ -504,20 +308,33 @@ extension ResumeViewController: URLSessionDownloadDelegate {
       let originalURL = downloadTask.originalRequest!.url!
       let downloadType = downloadTask.originalRequest!.url!.pathExtension
     
-      print("the download type is \(downloadType)")
-      
+      print("the originalURL was \(originalURL) download type is \(downloadType)")
+        
+       
+        
         if downloadType == "pdf" {
-         localURL = copyFromTempURLToLocalURL(remoteURL: originalURL, location: location)
+            
+         // copy the pdf file from temp url to local url
+         localResumeURL = copyFromTempURLToLocalURL(remoteURL: originalURL, location: location)
           
-      } else {
+      } else { //download type is jpg for profile image
+            
+        // copyt the profile image file from temp to permanent
         localImageURL = copyFromTempURLToLocalURL(remoteURL: originalURL, location: location)
     }
     
-     
-        if localURL != nil && localImageURL != nil {
+        
+     //if we have a valid local pdf file and local image file
+    if localResumeURL != nil && localImageURL != nil {
+            
     DispatchQueue.main.async {
+        
         self.waitingForDataLabel.isHidden = true
+        
+        // takes local pdf file and sets up the pdf view with pdf doc
         self.setUpPDFView()
+        
+        //
         self.setupProfileImageFromLocalURL()
             }
      }
@@ -525,20 +342,25 @@ extension ResumeViewController: URLSessionDownloadDelegate {
    }
     
     func setUpPDFView() {
+      
+      var document: PDFDocument!
+        
+        // use the local resume pdf file to
+        // init a pdf document
+        if  let localPDFURL = localResumeURL {
+          document = PDFDocument(url: localPDFURL)
+        }
            
-           var document: PDFDocument!
-           
-           if  let pathURL = localURL {
-           document = PDFDocument(url: pathURL)
-           }
-           
-           if let document = document {
+       // if we have a non nil pdf document then
+       // use it to set the doc property of pdf view
+       if let document = document {
                pdfView.displayMode = .singlePageContinuous
                pdfView.autoScales = true
                pdfView.displayDirection = .vertical
                pdfView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.25)
                pdfView.document = document
            }
+        
           self.view.hideLoadingIndicator()
        }
     
@@ -547,8 +369,12 @@ extension ResumeViewController: URLSessionDownloadDelegate {
            if localImageURL != nil {
            
            //let localImageURL = URL(string: localURLAsString)
+            
+           // pass the local photo file to convert to Data
            let imageData = try! Data(contentsOf: localImageURL!)
            
+           // use data object to init UIImage
+           // use it to set image property
            let imageFromURl = UIImage(data: imageData)
            imgVwUserDP.image = imageFromURl
            }
@@ -557,10 +383,6 @@ extension ResumeViewController: URLSessionDownloadDelegate {
     
     func copyFromTempURLToLocalURL(remoteURL: URL, location: URL) -> URL {
       
-        // 1 get the original url we used to download
-        // the document from fire base storage
-       //let sourceURL = URL(string: selectedSingle.documentDownloadURLString ?? "")!
-        
         let sourceURL = remoteURL
        // 2 create a file path pointing to the local
        // document directory
@@ -595,76 +417,8 @@ extension ResumeViewController: URLSessionDownloadDelegate {
 // MARK: - BUTTION ACTION(S) -
 //
 extension ResumeViewController {
-    @IBAction func btnShareResumeTapped(_ sender: Any) {
-        self.shareResumeOnly()
-        
-    }
-    
-   
-    
-    @IBAction func btnShareResumePhotoTapped(_ sender: Any) {
-        self.shareResumeAndPhoto()
-        
-    }
-    
-    
-    
-    
-    
-    func saveToSentShadchanMatchesAndUpdateHud(hudView: HudView) {
-        
-        //if isAlreadyInSent {
-       //     return
-       // }
-        ref = Database.database().reference()
-        
-        guard let shadchanID = UserInfo.curentUser?.id else {
-            return
-        }
-        let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
-        
-        let newMatchDict = newMatch.toAnyObject()
-        
-        
-        //let imageName = UUID().uuidString
-        //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
-        //let usersRef = Database.database().reference(withPath: "online")
-       // let matchesRef = Database.database().reference(withPath: "nasiMatches")
-        //UUID().uuidString
-        let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
-        
-        
-        ref.child("sentNasiMatches").child(shadchanID).child(boyAndGirlNames).setValue(newMatchDict){
-            (error, ref) in
-                  
-            if error != nil {
-                //print(error?.localizedDescription ?? “”)
-                      
-             } else {
-             hudView.text = "Save Successful!"
-                      
-             }
-            }
-          }
-
-
-    /*
-        ref.child("sentsegment").child(myId).childByAutoId().setValue(dict) {
-            (error, ref) in
-            
-            if error != nil {
-                //print(error?.localizedDescription ?? “”)
-                
-            } else {
-                hudView.text = "Save Successful!"
-                
-            }
-        }
-    }
-    
- */
-    
-    func checkResearchListAndStoreAutoIDKey() {
+  
+  func checkResearchListAndStoreAutoIDKey() {
         
         guard let myId = UserInfo.curentUser?.id else {
             return
@@ -730,90 +484,69 @@ extension ResumeViewController {
 
 extension ResumeViewController: MFMailComposeViewControllerDelegate {
     
-     @IBAction func sendEmailWithJustResume(sender: UIButton) {
+   
+    func sendEmailWithBothResumeAndProfileImage(sender: UIButton){
+        if MFMailComposeViewController.canSendMail() {
+                   
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.setSubject("Resume of \(selectedNasiGirl.nameSheIsCalledOrKnownBy)" + " " + "\(selectedNasiGirl.lastNameOfGirl)")
+                              
+        mailComposer.setMessageBody("xxxxxxx", isHTML: false)
+                                    
+        let decisionMakerEmail = selectedNasiBoy.decisionMakerEmail
+        mailComposer.setToRecipients([decisionMakerEmail])
+                   
+        let attachmentData = try! Data(contentsOf: localResumeURL)
+        mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "girlsResume")
+                   
+        let attachmentData2 = try! Data(contentsOf: localImageURL)
+                   mailComposer.addAttachmentData(attachmentData2, mimeType: "image/jpg", fileName: "girlsProfilePhoto")
+                   
+                   
+                       
+        mailComposer.mailComposeDelegate = self
+        self.present(mailComposer, animated: true
+                                                   , completion: nil)
+        }
+    }
+        
+    func sendEmailWithJustResume(sender: UIButton) {
          if MFMailComposeViewController.canSendMail() {
             
             let mailComposer = MFMailComposeViewController()
-            mailComposer.setSubject("Update about ios tutorials")
-            mailComposer.setMessageBody("What is the update about ios tutorials on youtube", isHTML: false)
+            mailComposer.setSubject("Resume of \(selectedNasiGirl.nameSheIsCalledOrKnownBy)" + " " + "\(selectedNasiGirl.lastNameOfGirl)")
+            
+            mailComposer.setMessageBody("xxxxxxx", isHTML: false)
                   
-            mailComposer.setToRecipients(["rpogrow@gmail.com"])
+            let decisionMakerEmail = selectedNasiBoy.decisionMakerEmail
+            mailComposer.setToRecipients([decisionMakerEmail])
             
-            // get the resume as the attachment
-            guard let filePath = Bundle.main.path(forResource: "SimplePDF", ofType: "pdf") else {return}
-            
-            let url = URL(fileURLWithPath: filePath)
-                       
-            do {
-            let attachmentData = try Data(contentsOf: url)
-            mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "SimplePDF")
-                
-                
-                
+            let attachmentData = try! Data(contentsOf: localResumeURL)
+            mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "girlsResume")
             mailComposer.mailComposeDelegate = self
             self.present(mailComposer, animated: true
-                               , completion: nil)
-            } catch let error {
-            print("We have encountered error \(error.localizedDescription)")
+                                            , completion: nil)
             }
-            
         
-            } else {
-                   print("Email is not configured in settings app or we are not able to send an email")
-               }
-           }
-             
-                
-    @IBAction func sendEmailWithPhotoAndResume(sender: UIButton) {
-        if MFMailComposeViewController.canSendMail() {
-        let mailComposer = MFMailComposeViewController()
-        mailComposer.setSubject("Update about ios tutorials")
-        mailComposer.setMessageBody("What is the update about ios tutorials on youtube", isHTML: false)
-        mailComposer.setToRecipients(["rpogrow@gmail.com"])
-            
-        guard let filePath = Bundle.main.path(forResource: "SimplePDF", ofType: "pdf")
-        else {
-            return
-        }
-        let url = URL(fileURLWithPath: filePath)
-                       
-        do {
-        let attachmentData = try Data(contentsOf: url)
-        mailComposer.addAttachmentData(attachmentData, mimeType: "application/pdf", fileName: "SimplePDF")
-        mailComposer.mailComposeDelegate = self
-        self.present(mailComposer, animated: true, completion: nil)
-            } catch let error {
-            print("We have encountered error \(error.localizedDescription)")
-        }
-        mailComposer.mailComposeDelegate = self
-                  
-        self.present(mailComposer, animated: true
-                           , completion: nil)
-          } else {
-            print("Email is not configured in settings app or we are not able to send an email")
-            }
     }
-    
-   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .cancelled:
             print("User cancelled")
-            break
-            
         case .saved:
             print("Mail is saved by user")
-            break
             
         case .sent:
-           saveToShadchanMatchIdeasAndUpdateHud()
-           print("save to redds list invoked")
-            //break
+           saveNewProjectToAllNasiShidduchProjects()
+            print("***************************mail is sent")
+        //break
             
         case .failed:
             print("Sending mail is failed")
-            break
+      
         default:
-            break
+            print("going to default")
         }
         
         controller.dismiss(animated: true)
@@ -822,43 +555,81 @@ extension ResumeViewController: MFMailComposeViewControllerDelegate {
 
 extension ResumeViewController: MFMessageComposeViewControllerDelegate{
     
-    func sendTextWithResumeAndPhoto() {
+    func sendTextJustResume(sender: UIButton) {
         if !MFMessageComposeViewController.canSendText() {
         print("SMS services are not available")
         }
         
     let composeVC = MFMessageComposeViewController()
+        
+        
+    let documentAsImage = drawPDFfromURL(url: localResumeURL)
+    let girlResumeImageAsData = documentAsImage?.jpegData(compressionQuality: 0.3)
+    composeVC.addAttachmentData(girlResumeImageAsData!, typeIdentifier: "public.data", filename: "girlsResume.jpeg")
     composeVC.messageComposeDelegate = self
      
     // Configure the fields of the interface.
-    composeVC.recipients = ["4085551212"]
-    composeVC.body = "Hello from California!"
+    let decisionMakerCell = selectedNasiBoy.decisionMakerCell
+    composeVC.recipients = [decisionMakerCell]
+    composeVC.body = "Resume of \(selectedNasiGirl.firstNameOfGirl)" + " " + "\(selectedNasiGirl.lastNameOfGirl)"
      
     // Present the view controller modally.
     self.present(composeVC, animated: true, completion: nil)
     }
     
-    func sendTextWithJustResume() {
+    
+    func sendTextBothResumeAndPhoto(sender: UIButton) {
         if !MFMessageComposeViewController.canSendText() {
             print("SMS services are not available")
         }
     let composeVC = MFMessageComposeViewController()
+        
+    let documentAsImage = drawPDFfromURL(url: localResumeURL)
+    let girlResumeImageAsData = documentAsImage?.jpegData(compressionQuality: 0.3)
+    composeVC.addAttachmentData(girlResumeImageAsData!, typeIdentifier: "public.data", filename: "girlsResume.jpeg")
+        
+        
+    let girlImagePath = localImageURL.path
+    let girlImage = UIImage(contentsOfFile: girlImagePath)
+    let imageAsData = girlImage?.jpegData(compressionQuality: 0.3)
+        
+    composeVC.addAttachmentData(imageAsData!, typeIdentifier: "public.data", filename: "girlsProfilePhoto.jpeg")
+        
     composeVC.messageComposeDelegate = self
      
+   
     // Configure the fields of the interface.
-    composeVC.recipients = ["4085551212"]
-    composeVC.body = "Hello from California!"
-     
+    let decisionMakerEmail = selectedNasiBoy.decisionMakerEmail
+    composeVC.recipients = [decisionMakerEmail]
+     composeVC.body = "Resume of \(selectedNasiGirl.firstNameOfGirl)" + " " + "\(selectedNasiGirl.lastNameOfGirl)"
+        
     // Present the view controller modally.
     self.present(composeVC, animated: true, completion: nil)
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController,
         didFinishWith result: MessageComposeResult) {
-    
-     controller.dismiss(animated: true, completion: nil)}
-    }
-    
+        
+        switch result {
+               case .cancelled:
+                   print("User cancelled")
+               
+                   
+               case .sent:
+            saveNewProjectToAllNasiShidduchProjects()
+                   print("***************************mail is sent")
+               //break
+                   
+               case .failed:
+                   print("Sending mail is failed")
+             
+               default:
+                   print("going to default")
+               }
+               
+               controller.dismiss(animated: true)
+           }
+}
 
    
    

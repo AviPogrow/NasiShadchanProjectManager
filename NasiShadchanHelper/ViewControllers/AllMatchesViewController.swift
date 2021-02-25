@@ -1,5 +1,5 @@
 //
-//  AllMatchesViewController.swift
+//  AllProjectsViewController.swift
 //  NasiShadchanHelper
 //
 //  Created by username on 2/5/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllMatchesViewController: UIViewController {
+class AllProjectsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

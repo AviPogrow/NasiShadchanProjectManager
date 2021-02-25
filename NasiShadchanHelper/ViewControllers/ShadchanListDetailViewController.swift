@@ -17,6 +17,9 @@
     // MARK: - IB-OUTLET(S)
     //
     // Section 1
+    
+    @IBOutlet weak var sendResumeButton: UIBarButtonItem!
+    
    
     @IBOutlet weak var headlineLabel: UILabel!
     @IBOutlet weak var headlineImageView: UIImageView!
@@ -96,17 +99,14 @@
     var childKey = ""
     var currentSingleID: String!
     
-    // ----------------------------------
- 
     @IBOutlet weak var profileProjectStatusLabel: UILabel!
-    
     @IBOutlet weak var saveToShidduchIdeasAndSendButton: UIButton!
-    
     @IBOutlet weak var saveToShidduchIdeasButton: UIButton!
-    
-    
     @IBOutlet weak var zoomScrollView: UIScrollView!
     
+    var selectedNasiGirlID: String!
+    var seletedShidduchProject: NasiMatch!
+    var isInstantiatedFromProjectDetails = false
     
     // MARK: - View Loading -
      //
@@ -119,16 +119,8 @@
         zoomScrollView.maximumZoomScale = 4.0
         zoomScrollView.zoomScale = 1.0
         zoomScrollView.delegate = self
+        //headlineLabel.te
         
-        
-    
-    headlineLabel.text = selectedNasiGirl.nameSheIsCalledOrKnownBy + " " + selectedNasiGirl.lastNameOfGirl + " Profile Details"
-        
-    // get the note for this user-this girl
-         self.getFavUserNote()
-        
-        // self.getPrevImages()
-   // Hide keyboard
     let gestureRecognizer = UITapGestureRecognizer(target: self,
                                                         action: #selector(hideKeyboard))
         gestureRecognizer.cancelsTouchesInView = false
@@ -146,6 +138,22 @@
          //self.btnCamera.isHidden = true
         headlineImageView.layer.cornerRadius = 8.0
         headlineImageView.clipsToBounds = true
+        
+        
+        //if isInstantiatedFromProjectDetails == true {
+            
+           saveToShidduchIdeasButton.isEnabled = false
+            
+            saveToShidduchIdeasAndSendButton.isHidden = true
+            saveToShidduchIdeasAndSendButton.isEnabled = false
+            
+            profileProjectStatusLabel.text = "Currently in xxx Projects - xxxxx - List"
+        //}
+        
+    }
+    
+    @IBAction func addToProjectsAndSendResume(_ sender: Any) {
+        saveToShadchanMatchIdeasAndUpdateHud()
     }
     
     
@@ -154,26 +162,43 @@
     }
     
     func saveToShadchanMatchIdeasAndUpdateHud() {
-        ref = Database.database().reference()
-           guard let shadchanID = UserInfo.curentUser?.id else {
+        guard let shadchanID = UserInfo.curentUser?.id else {
                return
            }
-           let dict = ["userId" : selectedNasiGirl.key]
+        let newShidduchProject = NasiMatch(
+                        boyID: "dovisherrer",
+                        boyFirstName: "Dovi",
+                        boyLastName: "Sherrer",
+                        boyProfileImageURLPath: "",
+                        girlID: "chavagoldstein",
+                        girlFirstName: "Chava",
+                        girlLastName: "Goldsteing",
+                        girlProfileImageURLPath: "",
+                        girlResumeURLPath: "",
+                        shadchanID: "ABC123",
+                        shadchanFirstName: "Sharon",
+                        shadchanLastName: "Lieber",
+                        lastActivity: "sent resume",
+                        projectStatus: "",
+                        nextTask: "",
+                        projectResult: "1stDated",
+                        decisionMakerFirstName: "Sara",
+                        decisionMakerLastName: "Goldman",
+                        decisionMakerEmail: "rstring@gmail.com",
+                        decisionMakerCell: "2223334455")
+       
+        
+        
+      
+        
            
+           // convert the swift object to a dictionary
+           let newMatchDict = newShidduchProject.toAnyObject()
            
-        let newMatch = NasiMatch(boyID: selectedNasiBoy.key, boyName: selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName, girlID: selectedNasiGirl.key, girlName: selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl, shadchanID: shadchanID, shadchanName: "")
+        let boyAndGirlNames = seletedShidduchProject.boyFirstName + seletedShidduchProject.boyLastName + seletedShidduchProject.girlFirstName +  seletedShidduchProject.girlLastName
            
-           let newMatchDict = newMatch.toAnyObject()
-           
-           
-           //let imageName = UUID().uuidString
-           //let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
-           //let usersRef = Database.database().reference(withPath: "online")
-          // let matchesRef = Database.database().reference(withPath: "nasiMatches")
-           //UUID().uuidString
-           let boyAndGirlNames = selectedNasiBoy.boyFirstName + selectedNasiBoy.boyLastName + selectedNasiGirl.nameSheIsCalledOrKnownBy + selectedNasiGirl.lastNameOfGirl
-           
-           ref.child("nasiMatchIdeas").child(boyAndGirlNames).setValue(newMatchDict){
+           // push the new match project to firebase
+           ref.child("AllNasiShidduchProjects").child(boyAndGirlNames).setValue(newMatchDict){
                (error, ref) in
                      
                if error != nil {
@@ -184,6 +209,8 @@
                          
                 }
                }
+  
+  
              }
     
     
@@ -227,7 +254,19 @@
             nameLabel.backgroundColor = UIColor.white
             
             containerView.addSubview(nameLabel)
-            nameLabel.text =  selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
+        if seletedShidduchProject != nil {
+        nameLabel.text  =  seletedShidduchProject.boyFirstName + " " + seletedShidduchProject.boyLastName
+            let urlString = seletedShidduchProject.boyProfileImageURLPath
+            profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
+            sendResumeButton.isEnabled = false 
+        } else {
+            nameLabel.text = selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName
+            let urlString = selectedNasiBoy.boyProfileImageURLString
+            profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
+            
+            sendResumeButton.isEnabled = true
+        }
+     
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             //need x,y,width,height anchors
             nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -242,14 +281,6 @@
             
     //        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         }
-    
-  
-    
-    
-    
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -426,31 +457,15 @@
         return .default
     }
     
-    /*
-    // ----------------------------------
-    // MARK: - PRIVATE METHOD(S) -
-    //
-    func showActionSheet() {
-        let alert = UIAlertController(title: "Nasi", message: "Please Select an Option", preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Would you like to save to my projects", style: .default , handler:{ (UIAlertAction)in
-            //self.saveToResearch()
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
-            print("User click Dismiss button")
-            self.navigationController?.popViewController(animated: true)
-        }))
-        
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-    }
-    */
+    
 
     //TODO: Initialize Data
     private func setUpProfilePhoto() {
         let selectedSingle = selectedNasiGirl
+        
+        print("the selectedNasiGirl is \(selectedNasiGirl.description)")
+        
+        
         
         
         headlineImageView.loadImageFromUrl(strUrl: selectedNasiGirl.imageDownloadURLString, imgPlaceHolder: "")
@@ -621,16 +636,12 @@
         let selectedSingle = selectedNasiGirl
         
         
-        print("the state of selectedNasiGirl is \(selectedNasiGirl.debugDescription)\(selectedNasiGirl.briefDescriptionOfWhatGirlIsLike)and her key is\(selectedNasiGirl.key)and ref is\(selectedNasiGirl.ref)")
+        print("the state of selectedNasiGirl is \(selectedNasiGirl.debugDescription)")
+            
+            //\(selectedNasiGirl.briefDescriptionOfWhatGirlIsLike)and her key is\(selectedNasiGirl.key)and ref is\(selectedNasiGirl.ref)")
+        // let gID = selectedSingle!.key
         
-        
-        
-        
-        
-                  
-        let gID = selectedSingle!.key
-        
-      //let gID = selectedNasiGirl.key
+      let gID = selectedNasiGirl.key
           
         ref = Database.database().reference()
         
@@ -708,7 +719,9 @@
            
          if segue.identifier == "ShowResumeVC" {
              
-            let controller = segue.destination as? ResumeViewController 
+            let controller = segue.destination as? ResumeViewController
+            
+            print("the state of selectedNasiGirl is \(selectedNasiGirl.lastNameOfGirl)\(selectedNasiGirl.firstNameOfGirl)")
             controller!.selectedNasiGirl =  selectedNasiGirl
             controller?.selectedNasiBoy = selectedNasiBoy
             controller?.isAlreadyInSent = isAlreadyInSentList

@@ -111,6 +111,11 @@ class FullTimeCollegeWorkingViewController: UIViewController, UITableViewDataSou
             profileImageView.clipsToBounds = true
             profileImageView.backgroundColor = UIColor.gray
             profileImageView.image = UIImage(named: "face04")
+        
+        let urlString = selectedNasiBoy.boyProfileImageURLString
+        profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
+        
+        
             //if let profileImageUrl = user.profileImageUrl {
            //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
            // }

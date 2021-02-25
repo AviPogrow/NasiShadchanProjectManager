@@ -31,6 +31,11 @@
 		18AB903E252DC21100D9FCAB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB903D252DC21100D9FCAB /* UserInfo.swift */; };
 		18E5DD152525CBCE005DD1DE /* NasiGirlsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */; };
 		3D0B7C1E25CD5AE30058DDA6 /* AllMatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */; };
+		3D5A9B3125D2E39F00F720F2 /* NasiProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A9B3025D2E39F00F720F2 /* NasiProjectCell.swift */; };
+		3D5A9B3325D9817400F720F2 /* FinalResultPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A9B3225D9817400F720F2 /* FinalResultPickerViewController.swift */; };
+		3D5A9B3525DAB36000F720F2 /* NotSentProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A9B3425DAB36000F720F2 /* NotSentProjectsViewController.swift */; };
+		3D5A9B3725DB2A7E00F720F2 /* ProjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A9B3625DB2A7D00F720F2 /* ProjectDetailsViewController.swift */; };
+		3D5A9B3925E09CD100F720F2 /* BoysListForProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A9B3825E09CD100F720F2 /* BoysListForProjects.swift */; };
 		3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */; };
 		3D6C74F325B773E80008C5A3 /* NasiBoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F225B773E80008C5A3 /* NasiBoy.swift */; };
 		3D6C74F525B77A300008C5A3 /* AddEditBoyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */; };
@@ -54,6 +59,7 @@
 		3DD45D7E25BB3D650025381B /* GreenCallButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45D7D25BB3D650025381B /* GreenCallButtonCell.swift */; };
 		3DD45DA625C09C520025381B /* SingleBoysTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45DA525C09C520025381B /* SingleBoysTableCell.swift */; };
 		3DD45DA825C0BE090025381B /* NasiMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD45DA725C0BE090025381B /* NasiMatch.swift */; };
+		3DFB680825E167A5009F192D /* BoysForProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFB680725E167A5009F192D /* BoysForProjectTableViewCell.swift */; };
 		CE3AC07424536729006B9FEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AC07324536729006B9FEA /* AppDelegate.swift */; };
 		CE3AC07824536729006B9FEA /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AC07724536729006B9FEA /* CategoriesViewController.swift */; };
 		CE3AC07B24536729006B9FEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3AC07924536729006B9FEA /* Main.storyboard */; };
@@ -120,6 +126,11 @@
 		18AB903D252DC21100D9FCAB /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		18E5DD142525CBCE005DD1DE /* NasiGirlsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiGirlsList.swift; sourceTree = "<group>"; };
 		3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMatchesViewController.swift; sourceTree = "<group>"; };
+		3D5A9B3025D2E39F00F720F2 /* NasiProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiProjectCell.swift; sourceTree = "<group>"; };
+		3D5A9B3225D9817400F720F2 /* FinalResultPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalResultPickerViewController.swift; sourceTree = "<group>"; };
+		3D5A9B3425DAB36000F720F2 /* NotSentProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSentProjectsViewController.swift; sourceTree = "<group>"; };
+		3D5A9B3625DB2A7D00F720F2 /* ProjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewController.swift; sourceTree = "<group>"; };
+		3D5A9B3825E09CD100F720F2 /* BoysListForProjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoysListForProjects.swift; sourceTree = "<group>"; };
 		3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBoysViewController.swift; sourceTree = "<group>"; };
 		3D6C74F225B773E80008C5A3 /* NasiBoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiBoy.swift; sourceTree = "<group>"; };
 		3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditBoyViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +154,7 @@
 		3DD45D7D25BB3D650025381B /* GreenCallButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenCallButtonCell.swift; sourceTree = "<group>"; };
 		3DD45DA525C09C520025381B /* SingleBoysTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleBoysTableCell.swift; sourceTree = "<group>"; };
 		3DD45DA725C0BE090025381B /* NasiMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasiMatch.swift; sourceTree = "<group>"; };
+		3DFB680725E167A5009F192D /* BoysForProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoysForProjectTableViewCell.swift; sourceTree = "<group>"; };
 		690419FF2D95D46817B237C4 /* Pods-NasiShadchanHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NasiShadchanHelper.debug.xcconfig"; path = "Target Support Files/Pods-NasiShadchanHelper/Pods-NasiShadchanHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		CE3AC07024536729006B9FEA /* NasiShadchanHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NasiShadchanHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3AC07324536729006B9FEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -351,6 +363,8 @@
 				3DC1849C258BBE6A00B529F0 /* GirlSentCell.swift */,
 				3DC184A025936A7700B529F0 /* SentTableViewCell.swift */,
 				3D9DA72125AE1A600056F656 /* AllGirlsTableViewCell.swift */,
+				3D5A9B3025D2E39F00F720F2 /* NasiProjectCell.swift */,
+				3DFB680725E167A5009F192D /* BoysForProjectTableViewCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -466,21 +480,14 @@
 		CEC468DC245B1C0E0071EC85 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				CE3AC07724536729006B9FEA /* CategoriesViewController.swift */,
 				3DC18498258BA4DA00B529F0 /* ShadchanProjectsViewController.swift */,
 				3DC18494258809A100B529F0 /* ResearchViewController.swift */,
-				3DC1849A258BBBF600B529F0 /* SentViewController.swift */,
-				CEC468DA245A217F0071EC85 /* ResumeViewController.swift */,
 				CE3AC0A5245383A0006B9FEA /* FullTimeYeshivaViewController.swift */,
 				CEC468DD245B37950071EC85 /* FullTimeCollegeWorkingViewController.swift */,
 				CEC468DF245C60120071EC85 /* YeshivaAndCollegeWorkingViewController.swift */,
-				CE428D53248142B500C34EAB /* ShadchanListDetailViewController.swift */,
 				CE525A6F2461B55200CBEC41 /* UIImage+Resize.swift */,
 				CEF80D1D245F7014009FE684 /* HudView.swift */,
 				3D9DA71D25ACCEB10056F656 /* ViewResumeVCViewController.swift */,
-				3D9DA71F25AE0DEA0056F656 /* AllNasiGirlsViewController.swift */,
-				3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */,
-				3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */,
 				3DD45D7B25BB3C870025381B /* UIView+Layout.swift */,
 				3DD45D7325BB3B7B0025381B /* AdminCollectionViewController.swift */,
 				3DD45D7D25BB3D650025381B /* GreenCallButtonCell.swift */,
@@ -488,6 +495,17 @@
 				3DD45D7725BB3C170025381B /* DialedNumbersHeader.swift */,
 				3DD45D7925BB3C510025381B /* BackspaceCell.swift */,
 				3D0B7C1D25CD5AE30058DDA6 /* AllMatchesViewController.swift */,
+				3DC1849A258BBBF600B529F0 /* SentViewController.swift */,
+				3D5A9B3225D9817400F720F2 /* FinalResultPickerViewController.swift */,
+				3D5A9B3425DAB36000F720F2 /* NotSentProjectsViewController.swift */,
+				3D5A9B3625DB2A7D00F720F2 /* ProjectDetailsViewController.swift */,
+				CE3AC07724536729006B9FEA /* CategoriesViewController.swift */,
+				3D5A9B3825E09CD100F720F2 /* BoysListForProjects.swift */,
+				3D9DA71F25AE0DEA0056F656 /* AllNasiGirlsViewController.swift */,
+				3D6C74F025B76DFA0008C5A3 /* AllBoysViewController.swift */,
+				3D6C74F425B77A300008C5A3 /* AddEditBoyViewController.swift */,
+				CE428D53248142B500C34EAB /* ShadchanListDetailViewController.swift */,
+				CEC468DA245A217F0071EC85 /* ResumeViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -695,6 +713,7 @@
 			files = (
 				184B498A2563EED4008B61F9 /* GradientView.swift in Sources */,
 				184F2F52252AE02500252C97 /* Utility.swift in Sources */,
+				3D5A9B3925E09CD100F720F2 /* BoysListForProjects.swift in Sources */,
 				3DC184A125936A7700B529F0 /* SentTableViewCell.swift in Sources */,
 				18E5DD152525CBCE005DD1DE /* NasiGirlsList.swift in Sources */,
 				3D6C74F325B773E80008C5A3 /* NasiBoy.swift in Sources */,
@@ -719,12 +738,15 @@
 				3D9DA72225AE1A600056F656 /* AllGirlsTableViewCell.swift in Sources */,
 				1825F99E252C3FE400448269 /* LoginVC.swift in Sources */,
 				3DD45D7E25BB3D650025381B /* GreenCallButtonCell.swift in Sources */,
+				3D5A9B3125D2E39F00F720F2 /* NasiProjectCell.swift in Sources */,
 				CE428D52248134AD00C34EAB /* User.swift in Sources */,
+				3D5A9B3525DAB36000F720F2 /* NotSentProjectsViewController.swift in Sources */,
 				184F985C252C696100187D72 /* AuthNavViewController.swift in Sources */,
 				3DD45DA625C09C520025381B /* SingleBoysTableCell.swift in Sources */,
 				3D9DA72025AE0DEA0056F656 /* AllNasiGirlsViewController.swift in Sources */,
 				3DD45D7625BB3BD30025381B /* KeyCell.swift in Sources */,
 				CEC468E0245C60120071EC85 /* YeshivaAndCollegeWorkingViewController.swift in Sources */,
+				3DFB680825E167A5009F192D /* BoysForProjectTableViewCell.swift in Sources */,
 				1825F9A0252C400600448269 /* SignUpVC.swift in Sources */,
 				1851798A2525FAF20099D65E /* ProgressIndicator.swift in Sources */,
 				3D6C74F125B76DFA0008C5A3 /* AllBoysViewController.swift in Sources */,
@@ -732,6 +754,8 @@
 				3DD45D7425BB3B7B0025381B /* AdminCollectionViewController.swift in Sources */,
 				3D0B7C1E25CD5AE30058DDA6 /* AllMatchesViewController.swift in Sources */,
 				CE525A702461B55300CBEC41 /* UIImage+Resize.swift in Sources */,
+				3D5A9B3325D9817400F720F2 /* FinalResultPickerViewController.swift in Sources */,
+				3D5A9B3725DB2A7E00F720F2 /* ProjectDetailsViewController.swift in Sources */,
 				CE3AC0A6245383A0006B9FEA /* FullTimeYeshivaViewController.swift in Sources */,
 				184F2F50252ADCDA00252C97 /* Constant.swift in Sources */,
 				CE525A76246366ED00CBEC41 /* HTCollegeTableViewCell.swift in Sources */,
@@ -931,7 +955,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.AviPogrow.NasiShadchanHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = com.avipogrow.NasiAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -953,7 +977,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.AviPogrow.NasiShadchanHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = com.avipogrow.NasiAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

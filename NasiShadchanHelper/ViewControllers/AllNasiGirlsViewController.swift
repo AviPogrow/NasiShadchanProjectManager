@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -21,17 +22,39 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.delegate = self
         tableView.dataSource = self
         
-        setupNavBarWithUser()
+        //setupNavBarWithUser()
         
-
-
-    allNasiGirlsList = self.allNasiGirlsList.sorted(by: { ($0.lastNameOfGirl ) < ($1.lastNameOfGirl ) })
-        
-    self.allNasiGirlsList = self.allNasiGirlsList.filter { (singleGirl) -> Bool in
-        return singleGirl.category != Constant.CategoryTypeName.CategoryEngaged1
-    }
+        fetchAndCreateNasiGirlsArray()
     }
     
+    func fetchAndCreateNasiGirlsArray() {
+      self.view.showLoadingIndicator()
+      allNasiGirlsList.removeAll()
+      
+      let allNasiGirlsRef = Database.database().reference().child("NasiGirlsList")
+        
+        guard let myId = UserInfo.curentUser?.id else {return}
+        allNasiGirlsRef.observe(.childAdded, with: { (snapshot) in
+        
+        let nasiGirl = NasiGirl(snapshot: snapshot)
+                     
+        self.allNasiGirlsList.append(nasiGirl)
+            
+        self.allNasiGirlsList = self.allNasiGirlsList.sorted(by: { ($0.lastNameOfGirl ) < ($1.lastNameOfGirl )
+            
+        })
+            
+        self.allNasiGirlsList = self.allNasiGirlsList.filter { (singleGirl) -> Bool in
+            return singleGirl.category != Constant.CategoryTypeName.CategoryEngaged1
+        }
+        DispatchQueue.main.async(execute: {
+            
+        self.view.hideLoadingIndicator()
+        self.tableView.reloadData()
+          })
+      })
+    }
+
     func setupNavBarWithUser() {
         //func setupNavBarWithUser(_ user: User) {
                //messages.removeAll()
@@ -58,6 +81,9 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
                //if let profileImageUrl = user.profileImageUrl {
               //     profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
               // }
+        
+        let urlString = selectedNasiBoy.boyProfileImageURLString
+        profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
                
                containerView.addSubview(profileImageView)
                
@@ -72,7 +98,9 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
                nameLabel.backgroundColor = UIColor.white
                
                containerView.addSubview(nameLabel)
+        if selectedNasiBoy != nil {
         nameLabel.text = selectedNasiBoy.boyFirstName + " " + selectedNasiBoy.boyLastName   //user.name
+        }
                nameLabel.translatesAutoresizingMaskIntoConstraints = false
                //need x,y,width,height anchors
                nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
@@ -116,6 +144,7 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
         
         cell.nameTextLabel.backgroundColor = UIColor.white 
         cell.nameTextLabel.textColor = UIColor.link
+        
         cell.nameTextLabel!.text = "\(currentGirl.nameSheIsCalledOrKnownBy)" + " " + "\(currentGirl.lastNameOfGirl)"
         
         cell.profileImageView.loadImageFromUrl(strUrl: currentGirl.imageDownloadURLString, imgPlaceHolder: "")
@@ -142,7 +171,10 @@ class AllNasiGirlsViewController: UIViewController, UITableViewDataSource, UITab
                    let currentGirl = allNasiGirlsList[indexPath.row]
                    
                    controller.selectedNasiGirl = currentGirl
+                
+                if selectedNasiBoy != nil {
                 controller.selectedNasiBoy = selectedNasiBoy
+                }
             }
         }
     }

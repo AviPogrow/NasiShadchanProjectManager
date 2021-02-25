@@ -65,15 +65,9 @@ class NasiGirl: NSObject {
     //
     init(snapshot: DataSnapshot) {
     
-        
-        //print("the snapshot.value is \(snapshot.value.debugDescription)")
-        
-        // get the dictionary holding the girls key values
-        //let value = snapshot.value as! [String: AnyObject]
         guard  let value = snapshot.value! as? [String: String] else { return }
         
         let lastNameOfGirl = value["lastNameOfGirl"] ?? ""
-        
         let briefDescriptionOfWhatGirlIsLike = value["briefDescriptionOfWhatGirlIsLike"] ?? ""
         let briefDescriptionOfWhatGirlIsLookingFor = value["briefDescriptionOfWhatGirlIsLookingFor"] ?? ""
         let category = value["category"] ?? ""
@@ -88,30 +82,16 @@ class NasiGirl: NSObject {
        
         // because we are getting a "testID 88" in the list
         if strDOB != "Empty" {
-        
-         //print("the name is \(firstNameOfGirl)\(lastNameOfGirl) firebase dob is\(strDOB)")
+       
         var date: Date? = Date.FromString(strDOB)
-            
-            print("the name is \(firstNameOfGirl)\(lastNameOfGirl)the key is \(snapshot.key) firebase dob is\(strDOB) birthdate is \(date)")
-            
-            
-         //MARK: TODO
-         // werner date is showing as 1196! in debugger but
-         // not in firebase
-         // but its causing this to be nil
+    
          if let birthDate = date {
          age = calculateAgeFrom(dob: birthDate)
          ageAsString = "\(age)"
          } else {
          ageAsString = "0.0"
             }
-        
-        //print("the name is \(firstNameOfGirl)\(lastNameOfGirl) firebase dob is\(strDOB) birthdate is \(birthDate) and age is \(age)")
-    
         }
-        
-       
-       
         
         let documentDownloadURLString = value["documentDownloadURLString"] ?? ""
         let emailOfContactToReddShidduch = value["emailOfContactToReddShidduch"] ?? ""
@@ -126,16 +106,12 @@ class NasiGirl: NSObject {
         let girlFamilySituation = value["girlFamilySituation"]
         ?? ""
         
-        
         let heightInFeet = value["heightInFeet"] ?? ""
         let heightInInches = value["heightInInches"] ?? ""
-        
         let imageDownloadURLString = value["imageDownloadURLString"] ?? ""
         
         let koveahIttim = value["koveahIttim"] ?? ""
-        
         let lastNameOfPersonToContactToReddShidduch = value["lastNameOfPersonToContactToReddShidduch"] ?? ""
-        
         let lastNameOfAContactWhoKnowsGirl = value["lastNameOfAContactWhoKnowsGirl"] ?? ""
         
         let livingInIsrael = value["livingInIsrael"] ?? ""
@@ -144,13 +120,10 @@ class NasiGirl: NSObject {
         
         let plan = value["plan"] ?? ""
         let professionalTrack = value["professionalTrack"] ?? ""
-        
         let relationshipOfThisContactToGirl = value["relationshipOfThisContactToGirl"] ?? ""
         
         let seminaryName = value["seminaryName"] ?? ""
-        
         let stateOfResidence = value["stateOfResidence"] ?? ""
-        
         let yearsOfLearning = value["yearsOfLearning"] ?? ""
         let zipCode = value["zipCode"] ?? ""
         

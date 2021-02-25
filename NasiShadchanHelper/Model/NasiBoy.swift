@@ -14,6 +14,7 @@ class NasiBoy: NSObject {
     var  key: String = ""
     var  boyFirstName: String = ""
     var  boyLastName: String = ""
+    var  boyProfileImageURLString = ""
     var  decisionMakerLastName: String = ""
     var  decisionMakerFirstName: String = ""
     var  decisionMakerCell: String = ""
@@ -41,6 +42,9 @@ class NasiBoy: NSObject {
         let boyFirstName = value["boyFirstName"] ?? "N/A"
         
         let addedByShadchanUserID = value["addedByShadchanUserID"] ?? "N/A"
+        let boyProfileImageURLString = value["boyProfileImageURLString"] ?? "N/A"
+        
+        self.boyProfileImageURLString = boyProfileImageURLString
         
         self.addedByShadchanUserID = addedByShadchanUserID
         self.decisionMakerLastName = decisionMakerLastName
@@ -57,7 +61,7 @@ class NasiBoy: NSObject {
     
     // init swift object from user input to then convert into dict
     // for upload
-    init(addedByShadchanUserID:String, decisionMakerLastName: String, decisionMakerFirstName: String, decisionMakerCell: String, decisionMakerEmail:String, boyLastName:String, boyFirstName: String, key: String = "") {
+    init(addedByShadchanUserID:String, decisionMakerLastName: String, decisionMakerFirstName: String, decisionMakerCell: String, decisionMakerEmail:String, boyLastName:String, boyFirstName: String,boyProfileImageURLString:String, key: String = "") {
         
       self.ref = nil
       self.key = key
@@ -69,6 +73,7 @@ class NasiBoy: NSObject {
       self.decisionMakerEmail = decisionMakerEmail
       self.boyLastName = boyLastName
       self.boyFirstName = boyFirstName
+     self.boyProfileImageURLString = boyProfileImageURLString
         
       self.dateCreated = "\(Date())"
     
@@ -85,10 +90,9 @@ class NasiBoy: NSObject {
          "decisionMakerEmail": decisionMakerEmail,
          "boyLastName": boyLastName,
          "boyFirstName":boyFirstName,
-         "dateCreated": dateCreated
-         
-         
-       ]
+         "dateCreated": dateCreated,
+         "boyProfileImageURLString":boyProfileImageURLString
+         ]
      }
     
     

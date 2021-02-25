@@ -113,6 +113,9 @@ class YeshivaAndCollegeWorkingViewController: UIViewController, UITableViewDeleg
             profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
             profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
             profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let urlString = selectedNasiBoy.boyProfileImageURLString
+        profileImageView.loadImageFromUrl(strUrl: urlString, imgPlaceHolder: "")
             
             let nameLabel = UILabel()
             nameLabel.backgroundColor = UIColor.white
